@@ -1,0 +1,64 @@
+variable SEED equal              1
+variable T equal                 0.25
+variable NUM_SPINS equal         40000
+variable DT equal                2
+variable OUT universe            raster.st
+variable HAZ equal               33
+variable ABS_TOL equal           0.02
+
+seed             ${SEED}
+
+#          app_name       num_spins    alpha   beta  haz
+app_style  potts/am/weld  ${NUM_SPINS} 0.75   0.50  ${HAZ}
+weld_shape_teardrop width 66.0 case I
+
+#Define simulation domain and initialize site variables
+#———————————————————————————————————————————
+dimension	 3
+lattice	 	 sc/26n 1.0
+region		 box block 0 200 0 200 0 1
+
+boundary 	 n n p
+
+create_box	 box
+create_sites	 box
+# Either one of the following equivalent 'set' commands work;
+# The stitch file init.st must have valid site values from 
+#   which lattice is being initialized.
+#   1) set i1
+#   2) set site
+#   3) set site stitch ...
+
+#set		 i1 range 1 ${NUM_SPINS}
+#set		 site range 1 ${NUM_SPINS}
+# Run following command to create 'init.st'
+# python init.py double --field='d1' 0 200 0 200 0 1
+set		 site stitch init.st first
+
+#set		 d1 value 0.0
+set		 d1 stitch init.st first
+#———————————————————————————————————————————
+
+#Define an additive scan pattern using pass, and cartesian_layer
+#———————————————————————————————————————————
+am pass 1 dir X speed 5 hatch 100.0
+am cartesian_layer 1 start LL pass_id 1 thickness 1 offset -25 0 serpentine 1
+#———————————————————————————————————————————
+
+#Setup the solver type and parameters. Must use a "sweep" style solver
+#——————————————————————————————————————————— 
+sector		 yes
+sweep		 random mask no
+temperature	 ${T}
+#——————————————————————————————————————————— 
+
+#Specify output commands and styles.
+#——————————————————————————————————————————— 
+diag_style   energy
+stats            1.0
+
+# Dumps 'site' value as well as double distance value 'd1';
+dump         dump.id stitch ${DT} ${OUT} site d1
+dump_modify dump.id tol ${ABS_TOL}
+
+run              100.0

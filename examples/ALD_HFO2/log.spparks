@@ -1,0 +1,847 @@
+SPPARKS (6 Sep 2023)
+# SPPARKS ald list updated 10042012
+seed	       4323
+
+app_style   ald
+
+read_sites data.ald
+  15872 sites
+  71680 neighbors
+  31744 values
+  512 sites have 1 neighbors
+  256 sites have 2 neighbors
+  5120 sites have 3 neighbors
+  4864 sites have 4 neighbors
+  0 sites have 5 neighbors
+  0 sites have 6 neighbors
+  5120 sites have 7 neighbors
+
+sector		no
+solve_style  linear
+
+#events Hf:Hafnium,O:Oxygen,X:Amide group,H:Hydrogen
+#events type 1: only change species of site
+#event	type	from		to		A			n	E(eV)	coord	pressureOn	reaction
+# adsorption of metal precursor_change_with_temp4
+event	1	O		HfX4O		 44879.2084     	0	0.00	1   	1	HfX4(g)+O(s)->HfX4...O(s)
+event	1	HfX4O		O		1.042296E13		0	1.00	2	0	HfX4(g)+O(s)->HfX4...O(s)from27032012
+event	1	OH		HfX4OH		 44879.2084             0	0.00	1	1	HfX4(g)+OH(s)->HfX4...OH(s)
+event	1	HfX4OH		OH		1.042296E13		0	1.00	2	0	same4from27032012
+                                                                                         
+#Hydrogen diffusion from oxygen to Ligand_bouncing14
+event	1	HfX4OH		HfHX4O		1.042296E13		0	1.35	2	0	HfX4...OH(s)->HfHX4...O(s)2308
+event   1       HfHX4O          HfX4OH          1.042296E13             0       1.76    2      	0	 same2308
+event	1	HfHX4OH		HfH2X4O		1.042296E13		0	1.35	2	0	HfHX4...OH->HfH2X4...O
+event	1	HfH2X4O		HfHX4OH		1.042296E13		0	1.76	2	0	same
+event	1	HfX3OH		HfHX3O		1.042296E13		0	1.35	2	0	HfX3...OH(s)->HfHX3...O(s)
+event	1	HfHX3O		HfX3OH		1.042296E13		0	1.76	2	0		same
+event	1	HfH2X4OH 	HfH3X4O 	1.042296E13		0	1.35	2	0	HfH2X4...OH(s)->HfH3X4...O(s)
+event	1	HfH3X4O 	HfH2X4OH 	1.042296E13		0	1.76	2	0		same_1808
+event	1	HfH2X3O  	HfHX3OH 	1.042296E13		0	1.35	2	0	HfH2X3...O(s)->HfHX3...OH(s)
+event	1	HfHX3OH  	HfH2X3O 	1.042296E13		0	1.76	2	0		same_1808
+event	1	HfH3X3O  	HfH2X3OH  	1.042296E13		0	1.35	2	0	HfH3X3...O(s)->HfH2X2...O(s)
+event	1	HfH2X3OH  	HfH3X3O  	1.042296E13		0	1.76	2	0		same_1808
+event	1	HfH3X4OH  	HfH4X4O  	1.042296E13		0	1.35	2	0	HfH3X4...OH(s)->HfH4X4...O(s)
+event	1	HfH4X4O  	HfH3X4OH  	1.042296E13		0	1.76	2	0		same18_1808
+
+#Ligand desorption
+
+# first desorption14
+event	1	HfHX4O		HfX3O		1.042296E13		0	0.89	2	0	HfHX4...O(s)->HfX3...O(s)21032012
+event	1	HfX3O		HfHX4O		1.042296E13		0	1.24	2	0	same21032012
+event	1	HfHX3O		HfX2O		1.042296E13		0	1.69	2	0	HfHX3...O(s)->HfX2...O(s)27032012
+event	1	HfX2O		HfHX3O		1.042296E13		0	2.87	2	0	same27032012
+event	1	HfHX4OH		HfX3OH		1.042296E13		0	0.89	2	0	HfHX4...OH(s)->HfX3...OH(s)21032012
+event	1	HfX3OH		HfHX4OH		1.042296E13		0	1.24	2	0		same21032012
+event	1	HfH2X4O		HfHX3O		1.042296E13		0	0.89	2	0	HfH2X4...O(s)->HfHX3...O(s)
+event	1	HfHX3O		HfH2X4O		1.042296E13		0	1.83	2	0		same
+event	1	HfH2X4OH 	HfHX3OH 	1.042296E13		0	0.89	2	0	HfH2X4...OH(s)->HfHX3...OH(s)
+event	1	HfHX3OH 	HfH2X4OH 	1.042296E13		0	1.83	2	0		same
+event	1	HfH3X4O  	HfH2X3O 	1.042296E13		0	0.39	2	0	HfH3X4...O(s)->HfH2X3...O(s)1608
+event	1	HfH2X3O  	HfH3X4O 	1.042296E13		0	0.83	2	0		same
+event	1	HfH3X4OH  	HfH2X3OH 	1.042296E13		0	0.39	2	0	HfH3X4...OH(s)->HfH2X3...OH(s)1608
+event	1	HfH2X3OH  	HfH3X4OH 	1.042296E13		0	0.83	2	0	same
+
+# second desorption16
+event	1	HfH2X3OH  	HfHX2OH 	1.042296E13		0	1.09	2	0	HfH2X3...OH->HfHX2..OH
+event	1	HfHX2OH  	HfH2X3OH 	1.042296E13		0	4.01	2	0	same
+event	1	HfH2X3O  	HfHX2O  	1.042296E13		0	1.09	2	0	HfH2X3...O(s)->HfHX2...O(s)
+event	1	HfHX2O  	HfH2X3O  	1.042296E13		0	4.01	2	0		same
+
+event	1	HfH4X4O  	HfH3X3O  	1.042296E13		0	0.70	2	0	HfH4X4...O(s)->HfH3X3...O(s)Idonotknow
+event	1	HfH3X3O  	HfH4X4O  	1.042296E13		0	2.82	2	0		sameIdonotknow
+event	1	HfH4X4OH  	HfH3X3OH  	1.042296E13		0	0.70	2	0	HfH4X4...OH(s)->HfH3X3..OH(s)Idonotknow
+event	1	HfH3X3OH  	HfH4X4OH  	1.042296E13		0	2.82	2	0		sameIdonotknow
+
+event	1	HfHX3OH		HfX2OH		1.042296E13		0	1.69	0	0	HfHX3...OH->HfX2...OH
+event	1	HfX2OH		HfHX3OH		1.042296E13		0	2.87	0	0		same
+event	1	HfHX3O 		HfX2O 		1.042296E13		0	1.69	0	0	HfHX3...OH->HfX2...OH
+event	1	HfX2O 		HfHX3O 		1.042296E13		0	2.87	0	0		same
+
+event	1	HfH3X3OH	HfH2X2OH	1.042296E13		0	1.07	0	0	HfH3X3...OH->HfH2X2...OH
+event	1	HfH2X2OH	HfH3X3OH	1.042296E13		0	3.99	0	0		same
+event	1	HfH3X3O  	HfH2X2O  	1.042296E13		0	1.07	2	0	HfH3X3...O(s)->HfH2X2...O(s)change1608
+event	1	HfH2X2O  	HfH3X3O  	1.042296E13		0	3.99	2	0		same
+
+# third desorption29
+event	1	HfH2X2  	HfHX	  	1.042296E13		0	0.80	4	0	HfH2X2->HfHX18072012
+event	1	HfH2X2  	HfHX	  	1.042296E13		0	0.30	5	0	HfH2X2->HfHX18072012
+event	1	HfH2X2  	HfHX	  	1.042296E13		0	0.30	6	0	HfH2X2->HfHX18072012
+event	1	HfH2X2  	HfHX	  	1.042296E13		0	0.30	7	0	HfH2X2->Hf1608
+event	1	HfH2X2  	HfHX	  	1.042296E13		0	0.25	8	0	HfH2X2->Hf16062011_1808
+event	1	HfH2X2  	Hf	  	1.042296E13		0	0.20	9	0	HfH2X2->Hf16062011_1808
+#event	1	HfHX  		HfH2X2	  	1.042296E13		0	1.10	0	0	same(ideally_it_does_not_happen)50	
+
+event	1	HfHX2		HfX		1.042296E13		0	0.89	5	0	HfHX2(d)->Hf18072012
+event	1	HfHX2		HfX		1.042296E13		0	0.89	6	0	HfHX2(d)->HfX(d)
+event	1	HfHX2		HfX		1.042296E13		0	0.80	7	0	HfHX2(d)->HfX(d)23072012
+event	1	HfHX2		HfX		1.042296E13		0	0.80	8	0	HfHX2(d)->HfX(d)23072012
+event	1	HfHX2		HfHX		1.042296E13		0	1.68	5	0	HfHX2(d)->HfX(d)1608
+event	1	HfX		HfHX2		1.042296E13		0	1.92	5	0	same(ideally_it_does_not_happen)
+event	1	HfX		HfHX2		1.042296E13		0	1.92	4	0	same(ideally_it_does_not_happen)
+event	1	HfX2		HfX		1.042296E13		0	0.90	7	0	HfX2->HfX	
+event	1	HfX		HfX2		1.042296E13		0	1.85	6	0		same
+event   1       HfHX            Hf              1.042296E13             0       1.64    0      	0	 HfHX(s)->Hf(s)  
+event   1       HfX             Hf              1.042296E13             0       0.64    7      	0	 HfHX(s)->Hf(s)23062011
+event   1       HfHX            Hf              1.042296E13             0       0.83    6      	0	 HfHX(s)->Hf(s)1806
+event   1       HfHX            Hf              1.042296E13             0       0.56    7      	0	 HfHX(s)->Hf(s)23062011_1806
+event	1	OH2HfHX	  	OH2Hf		1.042296E13		0	0.50   	7	0		same28062011
+event	1	OH2HfX	  	OH2Hf		1.042296E13		0	0.50   	7	0		same28062011
+event   1       Hf              HfHX            1.042296E13             0       0.62    3      	1         same58
+event   1       Hf              HfHX            1.042296E13             0       0.62    4      	1         same58
+event   1       Hf              HfHX            1.042296E13             0       0.62    5      	1         same58
+event   1       HfHX            Hf              1.042296E13             0       0.50    8      	0	 HfHX(s)->Hf(s)16072012
+event   1       HfX             Hf              1.042296E13             0       0.50    8      	0	 HfHX(s)->Hf(s)16072012
+# make site active in the list after densification(artificial)
+event	1	HfX2    	HfX	  	1.042296E13		0	2.00	0	0	HfX2->HfX22072012
+event	1	HfHX2    	HfX	  	1.042296E13		0	2.00	0	0	HfX2->HfX22072012
+event	1	HfH2X2    	HfHX	  	1.042296E13		0	2.00	0	0	HfX2->HfX22072012
+                                                                                         
+#event	type	from		to		from		to		A			n	E	coord	pressureOn	reaction
+#water decompostion 
+
+event   2       O               OH              OH2             OH              1.042296E13            0       0.40    1     	0 	OH2+O->OH+OH24082012
+event   2       O               OH              OH2             OH              1.042296E13            0       0.40    -9     	0 	OH2+O->OH+OH24082012
+event   2       O               OH              OH2             OH              1.042296E13            0       0.40    -19     	0 	OH2+O->OH+OH24082012
+event   2       O               OH              OH2             OH              1.042296E13            0       0.69    2     	0 	OH2+O->OH+OH24082012
+event   2       O               OH              OH2             OH              1.042296E13            0       0.69    -8     	0 	OH2+O->OH+OH24082012
+event   2       O               OH              OH2             OH              1.042296E13            0       0.69    -18     	0 	OH2+O->OH+OH24082012
+
+#proton diffusion through H2O
+
+#event   2       OH              OH2              OH2              OH             1.042296E13            0       0.50    1        0       OH+OH2->OH2+OH08092012
+#event   2       OH              OH2              OH2              OH             1.042296E13            0       0.50    -9       0       OH+OH2->OH2+OH08092012
+#event   2       OH              OH2              OH2              OH             1.042296E13            0       0.50    -19      0       OH+OH2->OH2+OH08092012
+
+#adsorption of water_change_with_temp19
+#water adsorption type II
+event	2	HfHX		OH2HfHX		HfHX		HfHX		2.154290E5		0	0.00	4	2	HfX4...O+OH->HfHX4...O+O03072012
+event	2	HfHX		OH2HfHX		HfHX		HfHX		2.154290E5		0	0.00	5	2	HfX4...O+OH->HfHX4...O+O03072012
+event	2	HfHX		OH2HfHX		HfHX		HfHX    	2.154290E5		0	0.00	6	2	HfX4...O+OH->HfHX4...O+O03072012
+
+event	2	OH2HfHX		HfHX		HfHX		HfHX		2.154290E5		0	0.00	4	2	HfX4...O+OH->HfHX4...O+O03072012
+event	2	OH2HfHX		HfHX		HfHX		HfHX		2.154290E5		0	0.00	5	2	HfX4...O+OH->HfHX4...O+O03072012
+event	2	OH2HfHX		HfHX		HfHX		HfHX    	2.154290E5		0	0.00	6	2	HfX4...O+OH->HfHX4...O+O03072012
+
+event	2	HfX		OH2HfX		HfX		HfX		2.154290E5		0	0.00	4	2	HfX4...O+OH->HfHX4...O+O03072012
+event	2	HfX		OH2HfX		HfX		HfX		2.154290E5		0	0.00	5	2	HfX4...O+OH->HfHX4...O+O03072012
+event	2	HfX		OH2HfX		HfX		HfX  	  	2.154290E5		0	0.00	6	2	HfX4...O+OH->HfHX4...O+O03072012
+
+event	2	OH2HfX		HfX		HfX		HfX		2.154290E5		0	0.00	4	2	HfX4...O+OH->HfHX4...O+O03072012
+event	2	OH2HfX		HfX		HfX		HfX		2.154290E5		0	0.00	5	2	HfX4...O+OH->HfHX4...O+O03072012
+event	2	OH2HfX		HfX		HfX		HfX    		2.154290E5		0	0.00	6	2	HfX4...O+OH->HfHX4...O+O03072012
+
+event	2	HfHX		OH2HfHX		HfX		HfX		2.154290E5		0	0.00	4	2	HfX4...O+OH->HfHX4...O+O03072012
+event	2	HfHX		OH2HfHX		HfX		HfX		2.154290E5		0	0.00	5	2	HfX4...O+OH->HfHX4...O+O03072012
+event	2	HfHX		OH2HfHX		HfX		HfX     	2.154290E5		0	0.00	6	2	HfX4...O+OH->HfHX4...O+O03072012
+
+event	2	OH2HfHX		HfHX		HfX		HfX		2.154290E5		0	0.00	4	2	HfX4...O+OH->HfHX4...O+O03072012
+event	2	OH2HfHX		HfHX		HfX		HfX		2.154290E5		0	0.00	5	2	HfX4...O+OH->HfHX4...O+O03072012
+event	2	OH2HfHX		HfHX		HfX		HfX     	2.154290E5		0	0.00	6	2	HfX4...O+OH->HfHX4...O+O03072012
+
+event	2	HfX		OH2HfX		HfHX		HfHX		2.154290E5		0	0.00	4	2	HfX4...O+OH->HfHX4...O+O03072012
+event	2	HfX		OH2HfX		HfHX		HfHX		2.154290E5		0	0.00	5	2	HfX4...O+OH->HfHX4...O+O03072012
+event	2	HfX		OH2HfX		HfHX		HfHX  	  	2.154290E5		0	0.00	6	2	HfX4...O+OH->HfHX4...O+O03072012
+
+event	2	OH2HfX		HfX		HfHX		HfHX		2.154290E5		0	0.00	4	2	HfX4...O+OH->HfHX4...O+O03072012
+event	2	OH2HfX		HfX		HfHX		HfHX		2.154290E5		0	0.00	5	2	HfX4...O+OH->HfHX4...O+O03072012
+event	2	OH2HfX		HfX		HfHX		HfHX   		2.154290E5		0	0.00	6	2	HfX4...O+OH->HfHX4...O+O03072012
+
+#water adsorption typeI 5
+event	1	Hf		OH2Hf		2.154290E5		0	0.00   	4	2	OH2Hf->Hf18102011	
+event	1	OH2Hf		Hf		2.154290E5		0	0.00   	4	2	same18102011
+event	1	Hf		OH2Hf		2.154290E5		0	0.00   	5	2	OH2Hf->Hf18102011	
+event	1	OH2Hf		Hf		2.154290E5		0	0.00   	5	2	same18102011
+event	1	Hf		OH2Hf		2.154290E5		0	0.00   	6	2	OH2Hf->Hf	
+
+#water desorption2
+event	1	OH2Hf		Hf		1.042296E13		0	0.46   	6	0	same
+event	1	OH2Hf		Hf		1.042296E13		0	0.83   	5	0	same
+#event	1	HfX		OHHfHX		3.046630E5		0	0.00   	0	2	HfX->OHHfHX
+#event	1	OHHfHX		HfX		3.046630E5		0	0.00   	0	2		same67
+                                                                                        
+
+
+
+#events type 2: change species of a site and second neighbour
+#event	type	from		to		from		to		A			n	E	coord	pressureOn	reaction
+#Hydrogen diffusion from oxygen to oxygen27
+event	2	O		OH		OH 		O		1.042296E13		0	0.46	1	0	O->OH1608
+event	2	O		OH		OH 		O		1.042296E13		0	0.75	2	0	O->OH1608
+event	2	O		OH		OH 		O		1.042296E13		0	0.46	-9	0	O->OH1608
+event	2	O		OH		OH 		O		1.042296E13		0	0.75	-8	0	O->OH1608
+event	2	O		OH		OH 		O		1.042296E13		0	0.46	-19	0	O->OH1608
+event	2	O		OH		OH 		O		1.042296E13		0	0.75	-18	0	O->OH1608
+event	2	O		OH		OH 		O		1.042296E13		0	0.46	-29	0	O->OH1608
+event	2	O		OH		OH 		O		1.042296E13		0	0.75	-28	0	O->OH1608
+event	2	O		OH		OH 		O		1.042296E13		0	0.95	3	0	O->OH30062011
+event	2	HfX4O		HfX4OH		OH		O		1.042296E13		0	0.75	2	0	HfX4...O+OH->HfX4...OH+O
+event	2	HfX4OH		HfX4O		O		OH		1.042296E13		0	0.75	2	0		same
+event	2	HfHX4O		HfHX4OH		OH		O		1.042296E13		0	0.75	2	0	HfHX4...O+OH->HfHX4...OH+O10
+event	2	HfHX4OH		HfHX4O		O		OH		1.042296E13		0	0.75	2	0		same
+event	2	HfH2X4O		HfH2X4OH	OH		O		1.042296E13		0	0.75	2	0	HfH2X4...O+OH->HfH2X4...OH+O	
+event	2	HfH2X4OH	HfH2X4O 	O		OH		1.042296E13		0	0.75	2	0	same
+event	2	HfH4X4O		HfH4X4OH	OH		O 		1.042296E13		0	0.75	2	0		same
+event	2	HfH4X4OH	HfH4X4O		O		OH 		1.042296E13		0	0.75	2	0	HfH4X4...OH+O->HfH4X4...O+OH
+event	2	HfH3X4O  	HfH3X4OH 	OH		O		1.042296E13		0	0.75	2 	0	HfH3X4...O+OH->HfH3X4...OH+O	
+event	2	HfH3X4OH  	HfH3X4O 	O		OH		1.042296E13		0	0.75	2 	0	same
+event	2	HfHX3O		HfHX3OH		OH		O		1.042296E13		0	0.75	2	0	HfHX3...O+OH->HfH2X3...O+O	
+event	2	HfHX3OH		HfHX3O		O		OH		1.042296E13		0	0.75	2	0		same
+event	2	HfX3O		HfX3OH		OH		O		1.042296E13		0	0.75	2	0	HfX3...O(s)->HfX3...OH(s)
+event	2	HfX3OH		HfX3O		O		OH		1.042296E13		0	0.75	2	0		same
+event	2	HfH2X3O		HfH2X3OH	OH		O 		1.042296E13		0	0.75	2	0	HfH2X3...O+OH->HfH2X3...OH+O	
+event	2	HfH2X3OH	HfH2X3O		O		OH 		1.042296E13		0	0.75	2	0		same
+event	2	HfH3X3O		HfH3X3OH	OH		O 		1.042296E13		0	0.75	2	0	HfH3X3...O+OH->HfH3X3...OH+O	
+event	2	HfH3X3OH	HfH3X3O		O		OH 		1.042296E13		0	0.75	2	0		same
+
+#Hydrogen diffusion from oxygen to Ligand (test rotation of protonated ligand in the case that adsorbate site is OH and O)16
+event	2	HfX4O		HfHX4O		OH		O		1.042296E13		0	0.51	2	0	HfX4...O+OH->HfHX4...O+O1608
+event	2	HfHX4O		HfX4O		O		OH		1.042296E13		0	0.64	2	0		same1608
+event	2	HfX4OH		HfHX4OH		OH		O		1.042296E13		0	0.51	2	0	HfX4...OH+OH->HfHX4...OH+O1608
+event	2	HfHX4OH		HfX4OH		O		OH		1.042296E13		0	0.64	2	0		same1608
+
+event	2	HfHX4O		HfH2X4O		OH		O		1.042296E13		0	0.59	2	0	HfHX4...O+OH->HfHX4...OH+O
+event	2	HfH2X4O		HfHX4O		O               OH		1.042296E13		0	0.76	2	0		same1608
+event	2	HfHX4OH		HfH2X4OH	OH		O		1.042296E13		0	0.59	2	0	HfHX4...OH+OH->HfH2X4...OH+O	
+event	2	HfH2X4OH	HfHX4OH	        O		OH		1.042296E13		0	0.76	2	0		same
+
+event	2	HfH3X4OH	HfH4X4OH	OH		O 		1.042296E13		0	0.42	2	0	HfH3X4...OH+OH->HfH4X4...OH+O
+event	2	HfH4X4OH	HfH3X4OH	O		OH 		1.042296E13		0	2.72	2	0		same
+event	2	HfH3X4O		HfH4X4O		OH		O		1.042296E13		0	0.42	2	0	HfH3X4...O+OH->HfH4X4...O+O20	
+event	2	HfH4X4O		HfH3X4O		O		OH		1.042296E13		0	2.72	2	0		same
+
+event	2	HfH2X4OH	HfH3X4OH	OH		O 		1.042296E13		0	0.49	2	0	HfH2X4...OH+OH->HfH3X4...OH+O	
+event	2	HfH3X4OH	HfH2X4OH	O		OH 		1.042296E13		0	0.81	2	0		same
+event	2	HfH2X4O		HfH3X4O		OH		O		1.042296E13		0	0.49	2	0	HfH2X4...O+OH->HfH3X4...O+O	
+event	2	HfH3X4O		HfH2X4O		O		OH		1.042296E13		0	0.81	2	0		same
+
+#these should change not accurate12
+event	2	HfX3O		HfHX3O		OH		O		1.042296E13		0	0.70	2	0	HfX3...O+OH->HfHX3...O+O30	
+event	2	HfHX3O		HfX3O		O		OH		1.042296E13		0	0.98	2	0		same
+event	2	HfX3OH		HfHX3OH		OH		O		1.042296E13		0	0.70	2	0	HfHX3...O+OH->HfH2X3...O+O	
+event	2	HfHX3OH		HfX3OH		O		OH		1.042296E13		0	0.98	2	0	same
+event	2	HfHX3OH		HfH2X3OH	OH		O		1.042296E13		0	0.70	2	0	HfHX3...OH+OH->HfH2X3...OH+O
+event	2	HfH2X3OH	HfHX3OH	 	O		OH		1.042296E13		0	0.98	2	0	same
+event	2	HfHX3O		HfH2X3O		OH		O		1.042296E13		0	0.70	2	0	HfHX3...O+OH->HfH2X3...O+O40
+event	2	HfH2X3O		HfHX3O		O		OH		1.042296E13		0	0.98	2	0		same
+
+event	2	HfH2X3O		HfH3X3O		OH		O 		1.042296E13		0	0.38	2	0	HfH2X3...O+OH->HfH3X3...O+O	
+event	2	HfH3X3O		HfH2X3O		O		OH 		1.042296E13		0	0.20	2	0		same.05cheating
+event	2	HfH2X3OH	HfH3X3OH	OH		O 		1.042296E13		0	0.38	2	0	HfH2X3...OH+OH->HfH3X3...OH+O
+event	2	HfH3X3OH	HfH2X3OH	O   		OH 		1.042296E13		0	0.20	2	0		same.05cheating
+                                                                                
+                                                                               
+#events type 3: change species of a site and first neighbour                    
+#event	type	from		to		from		to		A			n	E	coord	pressureOn	reaction
+#the water densification9                                                                                                     
+
+event	3	OH2HfX		HfX		VAC		OH2		1.042296E13		0	0.30	4	0	OH2HfX+VAC->HfX+OH21808
+event	3	OH2HfX		HfX		VAC		OH2		1.042296E13		0	0.30	5	0	OH2HfX+VAC->HfX+OH21808
+event	3	OH2HfX		HfX		VAC		OH2		1.042296E13		0	0.60	6	0	OH2HfX+VAC->HfX+OH21808
+
+event	3	OH2HfHX	  	HfHX		VAC		OH2		1.042296E13		0	0.30	4	0	OH2HfHX+VAC->HfHX+OH1808
+event	3	OH2HfHX	  	HfHX		VAC		OH2		1.042296E13		0	0.30	5	0	OH2HfHX+VAC->HfHX+OH1808
+event	3	OH2HfHX	  	HfHX		VAC		OH2		1.042296E13		0	0.60	6	0	OH2HfHX+VAC->HfHX+OH1808
+
+event	3	OH2Hf		Hf              VAC             OH2		1.042296E13		0	0.25	4	0	OH2Hf+VAC->Hf+OH218102011
+event	3	OH2Hf		Hf              VAC             OH2		1.042296E13		0	0.35	5	0	OH2Hf+VAC->Hf+OH218102011
+event	3	OH2Hf		Hf              VAC             OH2		1.042296E13		0	0.45	6	0	OH2Hf+VAC->Hf+OH2	
+
+#the reverse of water densification9
+
+event	3	OH2		VAC		HfHX	  	OH2HfHX		1.042296E13		0	0.46	1	0		same
+event	3	OH2		VAC		HfHX	  	OH2HfHX		1.042296E13		0	0.83	2	0		same
+event	3	OH2		VAC		HfHX	  	OH2HfHX		1.042296E13		0	1.20	3	0		same
+
+event	3	OH2		VAC		HfX		OH2HfX		1.042296E13		0	0.46	1	0		same
+event	3	OH2		VAC		HfX		OH2HfX		1.042296E13		0	0.83	2	0		same
+event	3	OH2		VAC		HfX		OH2HfX		1.042296E13		0	1.20	3	0		same
+
+event	3	OH2             VAC		Hf		OH2Hf           1.042296E13		0	0.46	1	0			same
+event	3	OH2             VAC		Hf		OH2Hf           1.042296E13		0	0.83	2	0			sam18102011
+event	3	OH2             VAC		Hf		OH2Hf           1.042296E13		0	1.20	3	0			sam18102011
+
+#Hydrogen diffusion from oxygen to Ligand6
+event	3	HfX2		HfHX2		OH		O		1.042296E13		0	0.91	0	0	HfX2+OH->HfHX2+O1608
+event	3	HfHX2		HfX2		O		OH		1.042296E13		0	1.25	6	0	same1608
+event   3       HfX             HfHX            OH              O               1.042296E13             0       0.70    0      	0	 HfX+OH->HfHX+O
+event   3       HfHX            HfX             O               OH              1.042296E13             0       1.28    0      	0                 same
+event	3	HfHX2		HfH2X2		OH		O		1.042296E13		0	0.88	0	0	HfHX2+OH->HfH2X2+O	
+event	3	HfH2X2		HfHX2		O		OH		1.042296E13		0	1.15	0	0		same6
+#                                                                                                                        
+#event	3	OHHfHX	  	HfHX		VAC		OH2		1.042296E13		0	0.10	0	0	OHHfHX+VAC->HfHX+OH
+#event	3	HfHX	  	OHHfHX		OH2		VAC		1.042296E13		0	0.68	0	0		sameforNowOH218
+
+#Hf densification 8                                                              
+event	3	HfX2O		O		VAC		HfX2		1.042296E13		0	0.20	0	0	HfX2...O+VAC->O+HfX2_22072012
+event	3	HfX2OH		OH		VAC		HfX2		1.042296E13		0	0.20	0	0	HfX2...OH+VAC->HfX2+OH_22072012
+event	3	HfHX2O		O		VAC		HfHX2		1.042296E13		0	0.20	0	0	HfHX2...O+VAC->O+HfHX2_22072012
+event	3	HfHX2OH		OH		VAC		HfHX2		1.042296E13		0	0.20	0	0	HfHX2...O+VAC->O+HfHX2_22072012
+event	3	HfH2X2O		O		VAC		HfH2X2		1.042296E13		0	0.20	0	0	HfH2X2...O+VAC->O+HfH2X2_22072012
+event	3	HfH2X2OH	OH		VAC		HfH2X2		1.042296E13		0	0.20	0	0	HfH2X2...OH+VAC->OH+HfH2X2_24_22072012
+event	3	HfH4X4O		O		VAC		HfH2X2		1.042296E13		0	0.20	0	0	HfH4X4...O+VAC->O+HfH2X2_22072012
+event	3	HfH4X4OH	OH		VAC		HfH2X2		1.042296E13		0	0.20	0	0	HfH4X4...OH+VAC->OH+HfH2X2_24_22072012
+                                                                                 
+#Hf reverse densification(for 3 and 4 coordinated HfX2) it may become wasteful event and then it sucks simulation 
+event	3	HfH2X2		VAC		O		HfH2X2O		1.042296E13		0	0.50	4	1	HfX2...O+VAC->O+HfX2_18072012
+event	3	HfH2X2		VAC		O		HfH2X2O		1.042296E13		0	0.40	3	1	HfX2...O+VAC->O+HfX2_18072012
+event	3	HfH2X2		VAC		OH		HfH2X2OH	1.042296E13		0	0.50	4	1	HfX2...O+VAC->O+HfX2_18072012
+event	3	HfH2X2		VAC		OH		HfH2X2OH	1.042296E13		0	0.40	3	1	HfX2...O+VAC->O+HfX2_18072012
+
+event	3	HfHX2		VAC		O		HfHX2O		1.042296E13		0	0.50	4	1	HfX2...O+VAC->O+HfX2_18072012
+event	3	HfHX2		VAC		O		HfHX2O		1.042296E13		0	0.40	3	1	HfX2...O+VAC->O+HfX2_18072012
+event	3	HfHX2		VAC		OH		HfHX2OH 	1.042296E13		0	0.50	4	1	HfX2...O+VAC->O+HfX2_18072012
+event	3	HfHX2		VAC		OH		HfHX2OH 	1.042296E13		0	0.40	3	1	HfX2...O+VAC->O+HfX2_18072012
+
+event	3	HfX2		VAC		O		HfX2O		1.042296E13		0	0.50	4	1	HfX2...O+VAC->O+HfX2_18072012
+event	3	HfX2		VAC		O		HfX2O		1.042296E13		0	0.40	3	1	HfX2...O+VAC->O+HfX2_18072012
+event	3	HfX2		VAC		OH		HfX2OH  	1.042296E13		0	0.50	4	1	HfX2...O+VAC->O+HfX2_18072012
+event	3	HfX2		VAC		OH		HfX2OH  	1.042296E13		0	0.40	3	1	HfX2...O+VAC->O+HfX2_18072012
+
+pulse_time		0.0001 	0.0001 #T1    T3
+purge_time		0.0001 	0.0001 #T2    T4  and cycle = T1+T2+T3+T4
+
+
+
+# temperature in units of eV
+
+temperature	0.04308
+
+# pressure in units of torr
+
+# s1 s2 s3 s4 s5 s6 s7 s8 s9 s10
+# s11 s12 s13 s14 s15 s16 s17 s18 s19 s20
+# s21 s22 s23 s24 s25 s26 s27 s28 s29 s30
+# s31 s32 s33 s34 s35 s36 s37 s38 s39 s40
+# s41 s42 s43 s44 s45 s46 s47 s48 s49 s50
+# s51 s52 s53 s54 s55 s56 s57 s58 s59 s60
+# d1 d2 d3 d4 d5 d6 d7 d8 d9 d10 
+# d11 d12 d13 d14 d15 d16 d17 d18 d19 d20 
+# d21 d22 d23 d24 d25 d26 d27 d28 d29 d30
+# d31 d32 d33 d34 d35 d36 d37 d38 d39 d40
+# d41 d42 d43 d44 d45 d46 d47 d48 d49 d50
+# d51 d52 d53 d54 d55 d56 d57 d58 d59 d60
+# v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
+# v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+
+#O OH HfX4O HfHX4O HfH2X4O HfH3X4O HfH4X4O HfX4OH HfHX4OH HfH2X4OH HfH3X4OH HfH4X4OH
+#O OH HfX3O HfHX3O HfH2X3O HfH3X3O HfX3OH HfHX3OH HfH2X3OH HfH3X3OH 
+#O OH HfX2O HfHX2O HfH2X2O HfX2OH HfHX2OH HfH2X2OH
+#O OH HfX2 HfHX2 HfH2X2
+#O OH HfHX HfX Hf 
+#O OH OH2Hf OHHfHX OH2HfHX OH2HfX OH2  
+
+diag_style      ald stats yes list events QCM O OH HfHX HfX Hf 
+stats           .000005
+dump            1 text .0001 dump.ald  id i1 i2 x y z
+
+run             0.008
+Setting up run ...
+Running with 32-bit site IDs
+Memory usage per processor = 1.08984 Mbytes
+      Time    Naccept    Nreject    Nsweeps        CPU events QCM O OH HfHX HfX Hf
+         0          0          0          0          0 896 8448 256 256 0 0 0
+5.00001e-06     732600          0          0       20.7 757 16422 365 134 18 0 0
+     1e-05    1701433          0          0       49.3 696 19028 387 105 20 0 0
+   1.5e-05    2640022          0          0       76.9 612 20744 405 85 25 0 0
+     2e-05    3402940          0          0       99.4 581 21183 416 74 27 0 0
+   2.5e-05    4061313          0          0        119 535 22990 432 56 32 0 0
+     3e-05    4556595          0          0        134 531 23828 435 51 33 0 0
+   3.5e-05    5026135          0          0        148 473 24402 442 43 34 0 0
+     4e-05    5409540          0          0        159 465 24222 447 39 35 0 0
+   4.5e-05    5794688          0          0        171 456 24532 451 34 35 0 0
+     5e-05    6117752          0          0        180 404 25325 457 27 37 0 0
+   5.5e-05    6390177          0          0        188 398 25100 464 22 39 0 0
+     6e-05    6620091          0          0        195 396 25100 463 23 39 0 0
+   6.5e-05    6862819          0          0        203 396 25100 463 23 39 0 0
+     7e-05    7090247          0          0        210 402 25455 464 21 39 0 0
+7.50001e-05    7290492          0          0        216 379 25764 464 20 39 0 0
+8.00001e-05    7496281          0          0        222 393 25764 464 20 39 0 0
+   8.5e-05    7684519          0          0        228 373 25764 465 19 39 0 0
+     9e-05    7910482          0          0        235 382 25764 465 19 39 0 0
+9.50001e-05    8122701          0          0        241 369 25584 466 20 41 0 0
+    0.0001    8250767          0          0        245 326 25804 470 16 42 0 0
+  0.000105    8358665          0          0        249 320 25804 469 17 42 0 0
+   0.00011    8480077          0          0        252 324 25804 470 16 42 0 0
+  0.000115    8582433          0          0        256 315 25714 471 16 43 0 0
+   0.00012    8689002          0          0        259 322 25714 470 17 43 0 0
+  0.000125    8816478          0          0        263 334 25714 470 17 43 0 0
+   0.00013    8930490          0          0        267 337 25714 469 18 43 0 0
+  0.000135    9047790          0          0        270 342 25714 471 16 43 0 0
+   0.00014    9179575          0          0        274 324 25714 471 16 43 0 0
+  0.000145    9311707          0          0        278 329 25714 471 16 43 0 0
+   0.00015    9445732          0          0        282 337 25714 471 16 43 0 0
+  0.000155    9577122          0          0        286 330 25714 470 17 43 0 0
+   0.00016    9707174          0          0        290 349 25714 469 18 43 0 0
+  0.000165    9840308          0          0        295 338 25714 469 18 43 0 0
+   0.00017    9985365          0          0        299 347 25714 469 18 43 0 0
+  0.000175   10131693          0          0        303 341 25714 468 19 43 0 0
+   0.00018   10287210          0          0        308 345 25714 467 20 43 0 0
+  0.000185   10442843          0          0        313 352 25714 466 21 43 0 0
+   0.00019   10560352          0          0        317 336 25624 468 20 44 0 0
+  0.000195   10652186          0          0        319 343 25624 469 19 44 0 0
+    0.0002   10742456          0          0        322 333 25624 468 20 44 0 0
+  0.000205   10841965          0          0        325 515 25642 466 27 42 0 1
+   0.00021   11087650          0          0        332 525 25543 455 51 36 0 8
+  0.000215   11404965          0          0        342 554 25516 453 60 36 0 9
+   0.00022   11708915          0          0        351 556 25507 450 65 35 0 10
+  0.000225   12072137          0          0        363 591 25534 447 72 34 0 11
+   0.00023   12454774          0          0        374 616 25354 451 69 33 0 13
+  0.000235   12870618          0          0        387 616 25300 456 67 34 0 13
+   0.00024   13274098          0          0        400 644 25210 458 66 35 0 13
+  0.000245   13691928          0          0        413 632 25030 462 64 37 0 13
+   0.00025   14031454          0          0        423 634 24931 461 68 37 0 14
+  0.000255   14317120          0          0        432 648 24841 463 67 38 0 14
+   0.00026   14590735          0          0        441 625 24850 458 75 37 0 15
+  0.000265   14846651          0          0        449 655 24805 459 74 36 0 16
+   0.00027   15143230          0          0        458 656 24733 462 73 37 0 16
+  0.000275   15475806          0          0        468 711 24607 454 91 37 0 18
+   0.00028   15875585          0          0        481 761 24616 454 94 36 0 19
+  0.000285   16312239          0          0        494 800 24598 448 110 35 0 21
+   0.00029   16790962          0          0        510 791 24571 449 110 34 0 22
+  0.000295   17232975          0          0        524 792 24454 452 108 35 0 21
+    0.0003   17626429          0          0        537 839 24076 452 117 37 0 24
+  0.000305   17981993          0          0        548 697 24067 454 117 36 0 25
+   0.00031   18328430          0          0        560 688 23887 451 121 35 0 27
+  0.000315   18619514          0          0        569 681 23752 455 118 35 0 28
+   0.00032   18886682          0          0        578 697 23662 456 118 36 0 28
+  0.000325   19057615          0          0        583 699 23482 459 117 38 0 28
+   0.00033   19200971          0          0        588 701 23437 459 117 37 0 29
+  0.000335   19336819          0          0        592 683 23437 459 117 37 0 29
+   0.00034   19475162          0          0        597 667 23437 459 117 37 0 29
+  0.000345   19612099          0          0        601 675 23437 460 116 37 0 29
+   0.00035   19745655          0          0        605 677 23392 460 116 36 0 30
+  0.000355   19878941          0          0        610 686 23392 459 117 36 0 30
+   0.00036   20021103          0          0        615 669 23392 459 117 36 0 30
+  0.000365   20159067          0          0        619 696 23392 458 118 36 0 30
+   0.00037   20289407          0          0        624 686 23392 460 116 36 0 30
+  0.000375   20418700          0          0        628 673 23392 460 116 36 0 30
+   0.00038   20549642          0          0        632 675 23392 459 117 36 0 30
+  0.000385   20674809          0          0        637 670 23392 459 117 36 0 30
+   0.00039   20801674          0          0        641 674 23302 460 117 37 0 30
+  0.000395   20880460          0          0        644 683 23302 460 117 37 0 30
+    0.0004   20957961          0          0        646 684 23302 460 117 37 0 30
+  0.000405   21267576          0          0        657 526 29317 504 57 47 0 23
+   0.00041   21577659          0          0        667 519 31439 514 40 47 0 23
+  0.000415   21841064          0          0        676 486 32722 521 29 47 0 23
+   0.00042   22023373          0          0        682 447 32896 524 27 49 0 23
+  0.000425   22191528          0          0        688 449 32896 521 30 49 0 23
+   0.00043   22355520          0          0        693 450 33560 528 21 49 0 23
+  0.000435   22462030          0          0        697 407 33425 527 23 49 0 24
+   0.00044   22588557          0          0        702 413 34134 529 19 50 0 23
+  0.000445   22725875          0          0        707 420 34044 529 19 50 0 23
+   0.00045   22792751          0          0        710 397 33864 532 18 52 0 23
+  0.000455   22852710          0          0        712 386 33864 533 17 52 0 23
+   0.00046   22917927          0          0        715 379 33864 532 18 52 0 23
+  0.000465   22996078          0          0        718 385 33864 531 19 52 0 23
+   0.00047   23078376          0          0        721 370 34174 531 18 52 0 23
+  0.000475   23171062          0          0        725 349 34174 531 18 52 0 23
+   0.00048   23253471          0          0        728 359 34174 530 19 52 0 23
+  0.000485   23340085          0          0        732 355 34174 531 18 52 0 23
+   0.00049   23427059          0          0        736 346 34174 532 17 52 0 23
+  0.000495   23520834          0          0        739 330 34528 530 18 52 0 23
+    0.0005   23617418          0          0        743 343 34528 530 18 52 0 23
+  0.000505   23723002          0          0        748 317 34393 531 17 49 0 26
+   0.00051   23820358          0          0        752 309 34303 530 18 47 0 28
+  0.000515   23916727          0          0        756 309 34213 531 17 46 0 29
+   0.00052   24017161          0          0        760 307 34168 530 18 45 0 30
+  0.000525   24112478          0          0        764 313 34168 530 18 45 0 30
+   0.00053   24216256          0          0        768 308 34123 530 18 44 0 31
+  0.000535   24319626          0          0        772 313 34123 529 19 44 0 31
+   0.00054   24426407          0          0        776 327 34123 528 20 44 0 31
+  0.000545   24503932          0          0        779 310 34123 528 20 44 0 31
+   0.00055   24609859          0          0        784 305 34033 530 19 45 0 31
+  0.000555   24711931          0          0        788 294 34033 531 18 45 0 31
+   0.00056   24814752          0          0        792 301 33988 531 18 44 0 32
+  0.000565   24913438          0          0        796 309 33988 530 19 44 0 32
+   0.00057   25010893          0          0        800 310 33988 530 19 44 0 32
+  0.000575   25110028          0          0        804 303 33988 530 19 44 0 32
+   0.00058   25202542          0          0        808 318 33988 530 19 44 0 32
+  0.000585   25305919          0          0        812 319 33988 528 21 44 0 32
+   0.00059   25404216          0          0        816 316 33988 528 21 44 0 32
+  0.000595   25508006          0          0        820 315 33988 529 20 44 0 32
+    0.0006   25607971          0          0        824 315 33988 529 20 44 0 32
+  0.000605   25736511          0          0        829 585 34015 522 47 42 0 36
+   0.00061   25971793          0          0        837 709 34069 516 66 40 0 38
+  0.000615   26200138          0          0        845 737 33925 516 75 38 0 41
+   0.00062   26677355          0          0        861 859 34024 506 98 35 0 44
+  0.000625   27302412          0          0        881 872 34033 504 103 34 0 45
+   0.00063   27788683          0          0        896 801 33871 505 104 33 0 47
+  0.000635   28125280          0          0        907 785 33637 506 112 32 0 50
+   0.00064   28560441          0          0        921 823 33655 507 112 32 0 50
+  0.000645   29040489          0          0        936 846 33583 509 112 33 0 50
+   0.00065   29610578          0          0        954 921 33574 504 119 32 0 51
+  0.000655   30193376          0          0        973 928 33520 503 123 33 0 51
+   0.00066   30816230          0          0        994 929 33349 505 125 31 0 54
+  0.000665   31387723          0          0   1.01e+03 962 33340 501 137 31 0 55
+   0.00067   32045314          0          0   1.03e+03 972 33151 499 143 32 0 56
+  0.000675   32685847          0          0   1.06e+03 1038 33097 499 145 30 0 58
+   0.00068   33303787          0          0   1.08e+03 1062 32827 501 151 31 0 60
+  0.000685   33938946          0          0    1.1e+03 1055 32755 499 160 30 0 62
+   0.00069   34635769          0          0   1.12e+03 1095 32719 498 165 31 0 62
+  0.000695   35294012          0          0   1.14e+03 1074 32503 497 171 31 0 64
+    0.0007   35856550          0          0   1.16e+03 1077 32386 495 174 28 0 67
+  0.000705   36422002          0          0   1.17e+03 947 32341 495 174 27 0 68
+   0.00071   36901089          0          0   1.19e+03 919 32251 499 170 27 0 68
+  0.000715   37319073          0          0    1.2e+03 912 32161 503 167 28 0 68
+   0.00072   37713751          0          0   1.22e+03 892 32116 501 169 27 0 69
+  0.000725   38077946          0          0   1.23e+03 909 31981 500 171 27 0 70
+   0.00073   38361825          0          0   1.24e+03 904 31981 502 169 27 0 70
+  0.000735   38630465          0          0   1.25e+03 901 31981 498 173 27 0 70
+   0.00074   38941989          0          0   1.26e+03 907 31981 500 171 27 0 70
+  0.000745   39259234          0          0   1.27e+03 893 31891 499 172 26 0 71
+   0.00075   39541907          0          0   1.28e+03 879 31891 501 170 26 0 71
+  0.000755   39775520          0          0   1.28e+03 878 31711 504 169 28 0 71
+   0.00076   39941807          0          0   1.29e+03 904 31711 504 169 28 0 71
+  0.000765   40120140          0          0   1.29e+03 909 31711 504 169 28 0 71
+   0.00077   40313345          0          0    1.3e+03 948 31711 503 170 28 0 71
+  0.000775   40496185          0          0   1.31e+03 938 31711 503 170 28 0 71
+   0.00078   40686370          0          0   1.31e+03 916 31711 504 169 28 0 71
+  0.000785   40894206          0          0   1.32e+03 885 31711 505 168 28 0 71
+   0.00079   41097303          0          0   1.32e+03 890 31711 503 170 28 0 71
+  0.000795   41332213          0          0   1.33e+03 932 31711 503 170 28 0 71
+    0.0008   41536077          0          0   1.34e+03 938 31711 502 171 28 0 71
+  0.000805   41978830          0          0   1.35e+03 752 36624 531 129 37 0 64
+   0.00081   42442039          0          0   1.37e+03 700 38745 542 113 39 0 64
+  0.000815   42894720          0          0   1.39e+03 730 39184 546 108 39 0 65
+   0.00082   43284158          0          0    1.4e+03 634 40158 554 98 41 0 64
+  0.000825   43525058          0          0   1.41e+03 629 40023 556 96 40 0 65
+   0.00083   43806997          0          0   1.42e+03 648 40068 555 97 41 0 64
+  0.000835   44120315          0          0   1.44e+03 611 40462 566 85 41 0 65
+   0.00084   44409882          0          0   1.45e+03 534 40636 572 79 42 0 65
+  0.000845   44674657          0          0   1.45e+03 546 41345 572 77 42 0 65
+   0.00085   44972093          0          0   1.46e+03 516 41300 573 76 42 0 65
+  0.000855   45222413          0          0   1.47e+03 538 41210 574 76 43 0 65
+   0.00086   45430576          0          0   1.48e+03 513 41475 580 69 43 0 65
+  0.000865   45673514          0          0   1.49e+03 535 41475 579 70 43 0 65
+   0.00087   45942858          0          0    1.5e+03 550 41475 582 67 43 0 65
+  0.000875   46180969          0          0    1.5e+03 525 41694 581 68 44 0 65
+   0.00088   46377601          0          0   1.51e+03 520 41649 581 68 43 0 66
+  0.000885   46561026          0          0   1.52e+03 506 41604 585 65 45 0 65
+   0.00089   46728978          0          0   1.52e+03 555 41514 585 66 46 0 65
+  0.000895   46871032          0          0   1.53e+03 505 41824 586 64 46 0 65
+    0.0009   47067382          0          0   1.54e+03 515 41824 587 63 46 0 65
+  0.000905   47282836          0          0   1.54e+03 515 41424 588 63 45 0 66
+   0.00091   47459157          0          0   1.55e+03 544 41334 590 62 46 0 66
+  0.000915   47613085          0          0   1.56e+03 511 41244 592 60 45 0 67
+   0.00092   47772674          0          0   1.56e+03 526 41244 590 62 45 0 67
+  0.000925   47945823          0          0   1.57e+03 514 41199 592 60 44 0 68
+   0.00093   48120989          0          0   1.58e+03 525 41064 590 62 41 0 71
+  0.000935   48265121          0          0   1.58e+03 529 40974 596 56 40 0 72
+   0.00094   48418530          0          0   1.59e+03 529 40929 594 58 39 0 73
+  0.000945   48596804          0          0   1.59e+03 541 40884 594 58 38 0 74
+   0.00095   48753778          0          0    1.6e+03 489 40749 596 57 39 0 74
+  0.000955   48902043          0          0   1.61e+03 474 40749 598 55 39 0 74
+   0.00096   49039411          0          0   1.61e+03 479 40659 598 56 40 0 74
+  0.000965   49188253          0          0   1.62e+03 512 40659 598 56 40 0 74
+   0.00097   49336673          0          0   1.62e+03 475 40659 599 55 40 0 74
+  0.000975   49488050          0          0   1.63e+03 474 40659 600 54 40 0 74
+   0.00098   49612419          0          0   1.64e+03 469 40659 600 54 40 0 74
+  0.000985   49729069          0          0   1.64e+03 488 40614 600 54 40 0 74
+   0.00099   49841138          0          0   1.64e+03 478 40614 600 54 40 0 74
+  0.000995   49943475          0          0   1.65e+03 445 40569 602 52 40 0 74
+     0.001   50063508          0          0   1.65e+03 442 40479 604 51 41 0 74
+  0.001005   50298342          0          0   1.66e+03 859 40173 591 95 41 0 82
+   0.00101   50695851          0          0   1.68e+03 1065 40056 575 134 37 0 88
+  0.001015   51216876          0          0    1.7e+03 1084 40110 565 157 33 0 92
+   0.00102   51841142          0          0   1.72e+03 1097 40065 564 164 33 0 93
+  0.001025   52466901          0          0   1.74e+03 1133 40146 554 181 32 0 94
+   0.00103   53154376          0          0   1.77e+03 1124 40200 555 183 32 0 94
+  0.001035   53909406          0          0    1.8e+03 1133 40119 553 189 32 0 95
+   0.00104   54629628          0          0   1.82e+03 1147 39930 551 194 30 0 98
+  0.001045   55302776          0          0   1.85e+03 1144 39822 551 199 29 0 100
+   0.00105   55954841          0          0   1.87e+03 1172 39795 549 202 28 0 101
+  0.001055   56551257          0          0   1.89e+03 1200 39696 547 207 28 0 102
+   0.00106   57128112          0          0   1.91e+03 1173 39552 550 208 30 0 102
+  0.001065   57605248          0          0   1.93e+03 1141 39480 551 209 31 0 102
+   0.00107   58006333          0          0   1.94e+03 1195 39300 553 208 30 0 104
+  0.001075   58279849          0          0   1.95e+03 1257 39354 549 215 30 0 104
+   0.00108   58571034          0          0   1.96e+03 1229 39318 546 221 28 0 106
+  0.001085   58844237          0          0   1.97e+03 1230 39318 547 220 28 0 106
+   0.00109   59156431          0          0   1.98e+03 1236 39336 546 222 28 0 106
+  0.001095   59500562          0          0   1.99e+03 1273 39336 545 223 28 0 106
+    0.0011   59821464          0          0      2e+03 1288 39327 542 228 27 0 107
+  0.001105   60101587          0          0   2.01e+03 1243 39192 543 228 28 0 107
+   0.00111   60220315          0          0   2.02e+03 1213 39192 544 227 28 0 107
+  0.001115   60342185          0          0   2.02e+03 1206 39192 543 228 28 0 107
+   0.00112   60397725          0          0   2.02e+03 1195 39192 543 228 28 0 107
+  0.001125   60517295          0          0   2.03e+03 1230 39192 543 228 28 0 107
+   0.00113   60645117          0          0   2.03e+03 1226 39192 544 227 28 0 107
+  0.001135   60777497          0          0   2.03e+03 1219 39192 544 227 28 0 107
+   0.00114   60874213          0          0   2.04e+03 1269 39192 544 227 28 0 107
+  0.001145   60987776          0          0   2.04e+03 1211 39102 545 227 29 0 107
+   0.00115   61105682          0          0   2.05e+03 1225 39102 545 227 29 0 107
+  0.001155   61219384          0          0   2.05e+03 1246 39102 545 227 29 0 107
+   0.00116   61300217          0          0   2.05e+03 1229 39102 545 227 29 0 107
+  0.001165   61398208          0          0   2.06e+03 1207 39102 546 226 29 0 107
+   0.00117   61520888          0          0   2.06e+03 1245 39102 544 228 29 0 107
+  0.001175   61617773          0          0   2.06e+03 1232 39102 545 227 29 0 107
+   0.00118   61703638          0          0   2.07e+03 1224 39102 545 227 29 0 107
+  0.001185   61844230          0          0   2.07e+03 1230 39102 545 227 29 0 107
+   0.00119   61986522          0          0   2.08e+03 1240 39102 545 227 29 0 107
+  0.001195   62096213          0          0   2.08e+03 1211 39102 544 228 29 0 107
+    0.0012   62215466          0          0   2.08e+03 1200 39102 545 227 29 0 107
+  0.001205   62408010          0          0   2.09e+03 992 45011 608 151 36 0 109
+   0.00121   62844288          0          0   2.11e+03 822 47662 626 126 38 0 109
+  0.001215   63265602          0          0   2.12e+03 810 48495 639 114 43 0 109
+   0.00122   63526763          0          0   2.13e+03 781 49288 649 103 45 0 109
+  0.001225   63822695          0          0   2.14e+03 729 49952 648 102 45 0 109
+   0.00123   64048687          0          0   2.15e+03 729 50965 662 87 48 0 109
+  0.001235   64256470          0          0   2.16e+03 680 51404 669 79 49 0 109
+   0.00124   64478068          0          0   2.17e+03 599 51978 672 74 49 0 109
+  0.001245   64722220          0          0   2.18e+03 597 51933 675 71 49 0 109
+   0.00125   64933219          0          0   2.18e+03 613 51933 676 70 49 0 109
+  0.001255   65145947          0          0   2.19e+03 611 51933 675 71 49 0 109
+   0.00126   65380479          0          0    2.2e+03 588 52552 681 63 49 0 109
+  0.001265   65629923          0          0   2.21e+03 586 52862 681 62 49 0 109
+   0.00127   65904411          0          0   2.22e+03 598 52862 680 63 49 0 109
+  0.001275   66132653          0          0   2.23e+03 613 52772 682 62 50 0 109
+   0.00128   66366764          0          0   2.24e+03 587 52772 681 63 50 0 109
+  0.001285   66591850          0          0   2.25e+03 550 52856 686 59 51 0 110
+   0.00129   66781266          0          0   2.25e+03 538 53211 692 52 52 0 109
+  0.001295   66958312          0          0   2.26e+03 513 53166 693 51 52 0 109
+    0.0013   67136755          0          0   2.27e+03 531 53121 694 50 52 0 109
+  0.001305   67253522          0          0   2.27e+03 517 53031 696 49 53 0 109
+   0.00131   67367922          0          0   2.28e+03 524 53031 696 49 53 0 109
+  0.001315   67491690          0          0   2.28e+03 498 52941 695 50 52 0 110
+   0.00132   67629363          0          0   2.29e+03 513 52896 695 50 51 0 111
+  0.001325   67744923          0          0   2.29e+03 473 52851 695 50 50 0 112
+   0.00133   67846861          0          0   2.29e+03 512 52851 695 50 50 0 112
+  0.001335   67961388          0          0    2.3e+03 490 52451 696 50 49 0 113
+   0.00134   68070442          0          0    2.3e+03 513 52451 696 50 49 0 113
+  0.001345   68152825          0          0    2.3e+03 504 52451 696 50 49 0 113
+   0.00135   68238715          0          0   2.31e+03 508 52451 696 50 49 0 113
+  0.001355   68346992          0          0   2.31e+03 480 52451 698 48 49 0 113
+   0.00136   68411491          0          0   2.31e+03 497 52316 696 51 49 0 114
+  0.001365   68450355          0          0   2.32e+03 468 52226 701 46 49 0 114
+   0.00137   68474722          0          0   2.32e+03 453 52181 700 47 48 0 115
+  0.001375   68505089          0          0   2.32e+03 485 52181 700 47 48 0 115
+   0.00138   68547266          0          0   2.32e+03 478 52181 701 46 48 0 115
+0.00138501   68575013          0          0   2.32e+03 459 52181 702 45 48 0 115
+   0.00139   68604008          0          0   2.32e+03 475 52181 704 43 48 0 115
+  0.001395   68619054          0          0   2.32e+03 476 52181 703 44 48 0 115
+    0.0014   68650302          0          0   2.32e+03 463 52181 704 43 48 0 115
+  0.001405   68799002          0          0   2.33e+03 926 51938 686 98 45 0 125
+   0.00141   69192340          0          0   2.34e+03 981 51920 669 134 38 0 132
+  0.001415   69778841          0          0   2.37e+03 996 52109 658 158 37 0 133
+   0.00142   70409150          0          0   2.39e+03 1054 52001 662 159 37 0 134
+  0.001425   71051456          0          0   2.42e+03 1102 52028 657 168 36 0 135
+   0.00143   71763527          0          0   2.44e+03 1115 52028 650 180 34 0 137
+  0.001435   72439217          0          0   2.47e+03 1178 51857 651 184 35 0 138
+   0.00144   73083736          0          0   2.49e+03 1211 51803 652 186 36 0 138
+  0.001445   73669417          0          0   2.52e+03 1214 51767 648 193 36 0 139
+   0.00145   74201158          0          0   2.54e+03 1222 51758 645 198 35 0 140
+  0.001455   74734826          0          0   2.55e+03 1189 51659 647 199 35 0 141
+   0.00146   75425037          0          0   2.58e+03 1231 51578 644 205 32 0 144
+  0.001465   76185566          0          0   2.61e+03 1224 51578 644 205 32 0 144
+   0.00147   76837733          0          0   2.64e+03 1306 51344 648 205 32 0 146
+  0.001475   77547415          0          0   2.66e+03 1252 51362 646 208 32 0 146
+   0.00148   78253226          0          0   2.69e+03 1305 51434 641 217 32 0 146
+  0.001485   78853960          0          0   2.71e+03 1298 51299 641 218 32 0 147
+   0.00149   79285157          0          0   2.73e+03 1407 51164 639 227 33 0 148
+  0.001495   79677430          0          0   2.75e+03 1451 51029 638 234 31 0 151
+    0.0015   80008624          0          0   2.76e+03 1507 51011 634 242 29 0 153
+  0.001505   80415809          0          0   2.77e+03 1379 51029 631 246 29 0 153
+   0.00151   80720093          0          0   2.79e+03 1338 51029 632 245 29 0 153
+  0.001515   80978924          0          0    2.8e+03 1372 50849 636 242 28 0 155
+   0.00152   81235400          0          0   2.81e+03 1417 50714 638 241 28 0 156
+  0.001525   81475514          0          0   2.82e+03 1393 50624 635 244 26 0 158
+   0.00153   81683488          0          0   2.82e+03 1445 50534 635 245 27 0 158
+  0.001535   81903011          0          0   2.83e+03 1463 50534 638 242 27 0 158
+   0.00154   82149412          0          0   2.84e+03 1493 50534 636 244 27 0 158
+  0.001545   82259670          0          0   2.85e+03 1492 50354 640 242 29 0 158
+   0.00155   82362994          0          0   2.85e+03 1474 50354 640 242 29 0 158
+  0.001555   82484893          0          0   2.86e+03 1515 50354 639 243 29 0 158
+   0.00156   82564796          0          0   2.86e+03 1475 50354 640 242 29 0 158
+  0.001565   82643268          0          0   2.86e+03 1485 50354 639 243 29 0 158
+   0.00157   82728718          0          0   2.87e+03 1454 50354 643 239 29 0 158
+  0.001575   82825513          0          0   2.87e+03 1462 50309 640 242 28 0 159
+   0.00158   82910039          0          0   2.87e+03 1471 50264 641 241 28 0 159
+  0.001585   83021894          0          0   2.88e+03 1435 50264 641 241 28 0 159
+   0.00159   83120545          0          0   2.88e+03 1477 50264 640 242 28 0 159
+  0.001595   83206822          0          0   2.88e+03 1502 50264 641 241 28 0 159
+    0.0016   83289451          0          0   2.89e+03 1497 50264 641 241 28 0 159
+  0.001605   83693368          0          0   2.91e+03 1073 55295 697 174 39 0 155
+   0.00161   84373525          0          0   2.94e+03 1014 58435 717 145 41 0 154
+  0.001615   85050347          0          0   2.97e+03 950 58745 716 145 41 0 154
+   0.00162   85711354          0          0      3e+03 962 59054 715 145 41 0 154
+  0.001625   86361439          0          0   3.03e+03 899 59583 728 130 41 0 154
+   0.00163   86973847          0          0   3.05e+03 883 59358 735 125 43 0 154
+  0.001635   87540823          0          0   3.08e+03 884 59533 739 121 44 0 154
+   0.00164   88127633          0          0    3.1e+03 878 59842 737 122 44 0 154
+  0.001645   88621281          0          0   3.12e+03 882 59927 742 119 47 0 154
+   0.00165   89010649          0          0   3.14e+03 790 60591 744 115 47 0 154
+  0.001655   89481518          0          0   3.16e+03 758 60720 752 106 47 0 154
+   0.00166   89913968          0          0   3.18e+03 793 60720 753 105 47 0 154
+  0.001665   90268477          0          0    3.2e+03 715 60805 761 97 47 0 155
+   0.00167   90502207          0          0   3.21e+03 706 60760 764 95 49 0 154
+  0.001675   90725469          0          0   3.22e+03 684 60670 766 93 49 0 154
+   0.00168   90979393          0          0   3.23e+03 708 60670 764 95 49 0 154
+  0.001685   91241710          0          0   3.24e+03 706 60625 763 96 48 0 155
+   0.00169   91504832          0          0   3.25e+03 716 60670 763 96 49 0 154
+  0.001695   91694296          0          0   3.26e+03 740 60625 765 94 49 0 154
+    0.0017   91836656          0          0   3.27e+03 731 60625 764 95 49 0 154
+  0.001705   91981791          0          0   3.27e+03 721 60580 762 97 49 0 154
+   0.00171   92108945          0          0   3.28e+03 680 60490 764 95 48 0 155
+  0.001715   92247451          0          0   3.28e+03 676 60355 763 96 45 0 158
+   0.00172   92331259          0          0   3.29e+03 651 60265 762 97 43 0 160
+  0.001725   92419497          0          0   3.29e+03 641 60175 768 91 42 0 161
+   0.00173   92516415          0          0   3.29e+03 652 60175 764 95 42 0 161
+  0.001735   92621108          0          0    3.3e+03 637 60175 765 94 42 0 161
+   0.00174   92736623          0          0    3.3e+03 648 60175 766 93 42 0 161
+  0.001745   92867055          0          0   3.31e+03 678 60175 767 92 42 0 161
+   0.00175   93008598          0          0   3.32e+03 627 60085 769 90 42 0 161
+  0.001755   93114459          0          0   3.32e+03 595 60085 769 90 42 0 161
+   0.00176   93207215          0          0   3.32e+03 642 60085 769 90 42 0 161
+  0.001765   93304442          0          0   3.33e+03 594 59995 767 92 40 0 163
+   0.00177   93393127          0          0   3.33e+03 588 59995 766 93 40 0 163
+  0.001775   93487009          0          0   3.34e+03 598 59995 766 93 40 0 163
+   0.00178   93579692          0          0   3.34e+03 613 59995 766 93 40 0 163
+  0.001785   93664802          0          0   3.34e+03 600 59995 766 93 40 0 163
+   0.00179   93765376          0          0   3.35e+03 603 59995 767 92 40 0 163
+  0.001795   93863879          0          0   3.35e+03 606 59950 766 93 39 0 164
+    0.0018   93960169          0          0   3.36e+03 621 59950 766 93 39 0 164
+  0.001805   94204987          0          0   3.37e+03 1205 59410 743 171 39 0 178
+   0.00181   94625290          0          0   3.39e+03 1306 59545 730 200 36 0 181
+  0.001815   95085346          0          0   3.41e+03 1379 59383 727 211 39 0 182
+   0.00182   95542339          0          0   3.43e+03 1299 59356 727 212 38 0 183
+  0.001825   95883199          0          0   3.44e+03 1482 59293 722 228 39 0 184
+   0.00183   96246102          0          0   3.46e+03 1500 59131 718 240 37 0 187
+  0.001835   96587152          0          0   3.47e+03 1524 58987 717 249 36 0 189
+   0.00184   96901619          0          0   3.48e+03 1586 58960 713 257 36 0 191
+  0.001845   97194713          0          0   3.49e+03 1604 58933 710 264 35 0 192
+   0.00185   97490466          0          0   3.51e+03 1616 58897 705 272 33 0 194
+  0.001855   97722424          0          0   3.52e+03 1671 58825 707 271 34 0 193
+   0.00186   97949796          0          0   3.52e+03 1676 58843 706 274 34 0 194
+  0.001865   98191461          0          0   3.53e+03 1684 58861 704 277 34 0 194
+   0.00187   98411835          0          0   3.54e+03 1744 58897 701 282 34 0 194
+  0.001875   98614104          0          0   3.55e+03 1674 58897 703 280 34 0 194
+   0.00188   98778456          0          0   3.55e+03 1686 58897 702 281 34 0 194
+  0.001885   98933015          0          0   3.56e+03 1704 58825 702 283 35 0 194
+   0.00189   99070686          0          0   3.57e+03 1756 58780 702 283 34 0 195
+  0.001895   99190641          0          0   3.57e+03 1744 58816 700 287 34 0 195
+    0.0019   99322634          0          0   3.57e+03 1768 58816 700 287 34 0 195
+  0.001905   99434732          0          0   3.58e+03 1660 58816 700 287 34 0 195
+   0.00191   99556711          0          0   3.58e+03 1676 58816 700 287 34 0 195
+  0.001915   99653925          0          0   3.58e+03 1621 58816 700 287 34 0 195
+   0.00192   99766320          0          0   3.59e+03 1687 58816 699 288 34 0 195
+  0.001925   99880078          0          0   3.59e+03 1654 58816 700 287 34 0 195
+0.00193002   99984097          0          0    3.6e+03 1610 58816 700 287 34 0 195
+  0.001935  100085364          0          0    3.6e+03 1663 58816 699 288 34 0 195
+   0.00194  100211503          0          0    3.6e+03 1669 58816 700 287 34 0 195
+  0.001945  100309024          0          0   3.61e+03 1663 58816 700 287 34 0 195
+   0.00195  100398503          0          0   3.61e+03 1639 58816 700 287 34 0 195
+  0.001955  100498170          0          0   3.61e+03 1587 58816 700 287 34 0 195
+   0.00196  100632642          0          0   3.62e+03 1684 58816 699 288 34 0 195
+  0.001965  100770795          0          0   3.62e+03 1658 58816 699 288 34 0 195
+   0.00197  100875738          0          0   3.63e+03 1677 58816 700 287 34 0 195
+  0.001975  101000414          0          0   3.63e+03 1630 58816 700 287 34 0 195
+   0.00198  101125982          0          0   3.63e+03 1632 58816 700 287 34 0 195
+  0.001985  101233893          0          0   3.64e+03 1638 58816 700 287 34 0 195
+   0.00199  101357762          0          0   3.64e+03 1707 58816 700 287 34 0 195
+  0.001995  101493389          0          0   3.65e+03 1608 58816 699 288 34 0 195
+     0.002  101632612          0          0   3.65e+03 1661 58816 700 287 34 0 195
+  0.002005  102181779          0          0   3.67e+03 1325 63537 749 227 40 0 195
+   0.00201  103028949          0          0   3.71e+03 1139 67291 784 182 43 0 195
+  0.002015  103973695          0          0   3.75e+03 1025 68613 799 164 45 0 195
+   0.00202  104845527          0          0   3.78e+03 1012 69581 804 157 46 0 196
+  0.002025  105771534          0          0   3.82e+03 909 70065 815 145 47 0 196
+   0.00203  106568535          0          0   3.85e+03 938 69975 816 145 48 0 196
+  0.002035  107308800          0          0   3.88e+03 866 70240 820 140 48 0 196
+   0.00204  108055079          0          0   3.91e+03 898 70150 822 138 48 0 196
+  0.002045  108722825          0          0   3.94e+03 870 70324 826 134 48 0 197
+   0.00205  109322579          0          0   3.96e+03 838 70499 829 131 49 0 197
+  0.002055  109811865          0          0   3.98e+03 820 70673 836 124 50 0 197
+   0.00206  110179953          0          0      4e+03 803 70673 836 124 50 0 197
+  0.002065  110560847          0          0   4.02e+03 845 71028 834 125 50 0 197
+   0.00207  110925272          0          0   4.03e+03 762 70893 837 123 50 0 198
+  0.002075  111268482          0          0   4.05e+03 738 70848 838 122 50 0 198
+   0.00208  111640003          0          0   4.07e+03 783 70848 838 122 50 0 198
+  0.002085  111994665          0          0   4.08e+03 711 70932 846 114 51 0 198
+   0.00209  112214504          0          0   4.09e+03 737 70842 847 114 52 0 198
+  0.002095  112431588          0          0    4.1e+03 716 70752 849 113 53 0 198
+    0.0021  112629984          0          0   4.11e+03 738 70617 850 113 53 0 199
+  0.002105  112803150          0          0   4.12e+03 680 70617 851 112 53 0 199
+   0.00211  112971581          0          0   4.13e+03 719 70572 852 111 52 0 200
+  0.002115  113148293          0          0   4.13e+03 732 70572 853 110 52 0 200
+   0.00212  113351924          0          0   4.14e+03 747 70482 851 112 50 0 202
+  0.002125  113546503          0          0   4.15e+03 691 70437 853 110 49 0 203
+   0.00213  113756365          0          0   4.16e+03 766 70437 854 109 49 0 203
+  0.002135  113970880          0          0   4.17e+03 704 70347 856 107 48 0 204
+   0.00214  114171770          0          0   4.18e+03 684 70347 857 106 48 0 204
+  0.002145  114364352          0          0   4.19e+03 708 70347 854 109 48 0 204
+   0.00215  114560848          0          0    4.2e+03 707 70347 854 109 48 0 204
+  0.002155  114806108          0          0   4.21e+03 697 70347 855 108 48 0 204
+   0.00216  115037700          0          0   4.22e+03 729 70347 854 109 48 0 204
+  0.002165  115251136          0          0   4.23e+03 714 70347 858 105 48 0 204
+   0.00217  115446528          0          0   4.24e+03 700 70212 858 106 49 0 204
+  0.002175  115564862          0          0   4.24e+03 666 70122 859 106 50 0 204
+   0.00218  115599077          0          0   4.24e+03 689 70122 860 105 50 0 204
+  0.002185  115652125          0          0   4.25e+03 685 70122 860 105 50 0 204
+   0.00219  115714811          0          0   4.25e+03 711 70032 861 105 51 0 204
+  0.002195  115753054          0          0   4.25e+03 692 70032 862 104 51 0 204
+    0.0022  115798556          0          0   4.25e+03 679 70032 861 105 51 0 204
+  0.002205  116004323          0          0   4.26e+03 1170 69501 855 142 58 0 210
+   0.00221  116417470          0          0   4.28e+03 1256 69384 843 170 52 0 216
+  0.002215  116906961          0          0    4.3e+03 1438 69474 829 195 50 0 219
+   0.00222  117383804          0          0   4.32e+03 1410 69510 828 203 48 0 221
+  0.002225  117966433          0          0   4.35e+03 1495 69591 820 218 47 0 222
+   0.00223  118619632          0          0   4.37e+03 1421 69618 816 226 46 0 223
+  0.002235  119136791          0          0   4.39e+03 1446 69348 815 235 47 0 225
+   0.00224  119439401          0          0   4.41e+03 1527 69195 812 242 42 0 230
+  0.002245  119773766          0          0   4.42e+03 1521 69213 811 244 42 0 230
+   0.00225  120072336          0          0   4.43e+03 1573 69177 808 251 43 0 230
+  0.002255  120314184          0          0   4.44e+03 1660 69123 807 255 44 0 230
+   0.00226  120476968          0          0   4.45e+03 1723 69024 807 258 44 0 231
+  0.002265  120582330          0          0   4.45e+03 1780 69024 806 259 44 0 231
+   0.00227  120676851          0          0   4.46e+03 1748 68979 807 259 44 0 231
+  0.002275  120781041          0          0   4.46e+03 1835 69015 807 261 44 0 231
+   0.00228  120890977          0          0   4.46e+03 1787 68988 805 264 45 0 231
+  0.002285  120987410          0          0   4.47e+03 1827 68943 805 264 44 0 232
+   0.00229  121116707          0          0   4.47e+03 1787 68916 805 265 43 0 233
+  0.002295  121242651          0          0   4.48e+03 1810 68916 804 266 43 0 233
+    0.0023  121354215          0          0   4.48e+03 1850 68970 801 272 43 0 233
+  0.002305  121462695          0          0   4.49e+03 1737 68970 802 271 43 0 233
+   0.00231  121569223          0          0   4.49e+03 1675 68970 802 271 43 0 233
+  0.002315  121679351          0          0   4.49e+03 1714 68970 802 271 43 0 233
+   0.00232  121788391          0          0    4.5e+03 1657 68970 802 271 43 0 233
+  0.002325  121914961          0          0    4.5e+03 1668 68970 802 271 43 0 233
+   0.00233  122020732          0          0   4.51e+03 1719 68970 802 271 43 0 233
+  0.002335  122117692          0          0   4.51e+03 1765 68970 802 271 43 0 233
+   0.00234  122214358          0          0   4.51e+03 1723 68970 800 273 43 0 233
+  0.002345  122312130          0          0   4.52e+03 1671 68970 801 272 43 0 233
+   0.00235  122402460          0          0   4.52e+03 1706 68970 801 272 43 0 233
+  0.002355  122518082          0          0   4.52e+03 1677 68970 802 271 43 0 233
+   0.00236  122635110          0          0   4.53e+03 1687 68970 801 272 43 0 233
+  0.002365  122772930          0          0   4.53e+03 1718 68970 802 271 43 0 233
+   0.00237  122883750          0          0   4.54e+03 1659 68970 802 271 43 0 233
+  0.002375  123005465          0          0   4.54e+03 1717 68970 802 271 43 0 233
+   0.00238  123146477          0          0   4.55e+03 1679 68970 801 272 43 0 233
+  0.002385  123284277          0          0   4.55e+03 1660 68970 802 271 43 0 233
+   0.00239  123437281          0          0   4.56e+03 1668 68970 801 272 43 0 233
+  0.002395  123575391          0          0   4.56e+03 1674 68970 801 272 43 0 233
+    0.0024  123687339          0          0   4.57e+03 1701 68970 802 271 43 0 233
+  0.002405  123965658          0          0   4.58e+03 1394 73602 849 213 48 0 234
+   0.00241  124479726          0          0    4.6e+03 1014 76337 880 174 49 0 235
+  0.002415  125126104          0          0   4.63e+03 1012 76776 889 165 51 0 235
+   0.00242  125602816          0          0   4.65e+03 1008 76995 896 157 51 0 235

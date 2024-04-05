@@ -1,0 +1,207 @@
+The Stitch library was developed by John Mitchell (jamitch@sandia.gov)
+and Jay Lofstead (gflofst@sandia.gov) at Sandia National Laboratories.
+It was conceived of and intended for use with SPPARKS additive
+manufacturing microstructure simulations.  However, it may have other
+applications.
+
+The libstitch sub-directory contains the Stitch source code.  A 'v1.1' tag was
+created in the 'stitch.repo' corresponding to the stitch source released with
+SPPARKS.  Any development after this tag 'v1.1' in 'stitch.repo' is untested.
+Only stitch source code included here in 'lib/stitch/libstitch/' is known to
+work with SPPARKS.  The exact list of files taken from 'stitch.repo' are listed
+in the file 'rsync_stitch_src.sh' contained within this directory.
+
+Three similar but different methods for building the stitch library and python
+module are described below. The first two methods are the simplest way to build
+SPPARKS with the Stitch library.  If they do not work for some reason, see
+method (3) or more detailed instructions below.
+
+Also see the instructions below on how to build the 'stitch' python module,
+which will be useful for accessing stitch database files directly via python.
+
+(1) From the src directory using make
+
+% cd spparks/src
+% make lib-stitch args="-b"   # build the Stitch library and set links to it
+% make yes-stitch             # install the STITCH package
+% make mpi                    # or whichever machine target you wish
+
+(2) From the lib directory using Install.py
+
+% cd spparks/lib/stitch
+% python Install.py -b        # build the Stitch library and set links to it
+% cd spparks/src
+% make yes-stitch             # install the STITCH package
+% make mpi                    # or whichever machine target you wish
+
+-------------------------------------------------------------------------
+
+(3) Manual build of the Stitch library from this directory or
+using a version you have downloaded to your system:
+
+% cd $STITCHDIR                # STITCHDIR = the Stitch library directory
+% make                         # build Stitch with default Makefile
+% make -f Makefile.custom      # build Stitch with custom Makefile
+% cd spparks/lib/stitch
+% ln -s $STITCHDIR liblink     # set two links in SPPARKS lib/stitch
+% ln -s $STITCHDIR includelink
+% cd spparks/src
+% make yes-stitch              # install the STITCH package
+% make mpi                     # or whichever machine target you wish
+
+-------------------------------------------------------------------------
+
+More build details:
+
+Let 'SPPARKS' denote the path to the SPPARKS root directory.  
+
+The folders and files in the 'SPPARKS' root directory should include the
+following:
+
+ls $SPPARKS
+doc/  examples/  lib/  LICENSE  python/  README src/  tools/  www/
+
+The 'lib/' directory contains 'stitch' source code in 'lib/stitch/libstitch',
+and instructions for building the 'stitch' libraries.  Two 'stitch' libraries
+generally need to be built.
+
+1) library for use with SPPARKS; must be built with mpicc
+2) python module; must have python 3, numpy, scipy 
+
+About the 'stitch' source code 
+ * 'stitch' source code is released with SPPARKS
+ * 'stitch' development is conducted in a different git repository 
+   referred to here as 'stitch.repo'
+
+
+Build libstitch.a for use with SPPARKS
+--------------------------------------
+
+To use 'stitch' related commands in SPPARKS input scripts, 
+the stitch library 'libstitch.a' must be built prior to building SPPARKS.
+
+In general, it is desirable to run SPPARKS in parallel; so 'libstitch.a' must 
+be built with a suitable mpi compiler.
+
+Build library in '$SPPARKS/lib/stitch/libstitch/'
+% cd $SPPARKS/lib/stitch/libstitch/
+
+Make sure that mpicc and mpicxx are on your path
+Copy the example Makefile.flamer; edit and set CC and CXX 
+appropriately for your mpi compiler
+% cp Makefile.flamer Makefile.my_makefile
+
+Build 'libstitch.a'
+% make -f Makefile.my_makefile stitch.lib
+
+Confirm there were not compile or link errors; Confirm the existence of
+'libstitch.a'
+
+Congratulations you have built 'libstitch.a'
+
+To make use of the library 'libstitch.a', the following links 
+must be created; these point SPPARKS to the 'stitch' header file 
+'stitch.h' and also the library 'libstitch.a' built above.  
+
+% cd $SPPARKS/lib/stitch
+% ln -s $SPPARKS/lib/stitch/libstitch liblink
+% ln -s $SPPARKS/lib/stitch/libstitch includelink
+
+Build SPPARKS with Stitch
+-------------------------
+
+SPPARKS must be built with the same mpi compiler used for 
+building 'stitch'; Edit the makefile appropriately to 
+set path to mpicxx.
+
+% cd $SPPARKS/src
+% make yes-stitch
+% make mpi (or whatever target you wish)
+
+See some example scripts which use stitch related commands.
+There is a README file
+
+% cd $SPPARKS/examples/stitch/README
+
+Examples
+% cd $SPPARKS/examples/stitch/dump_and_set_cmds
+
+Run 'stitch_test'
+% cd $SPPARKS/lib/stitch/libstitch
+% make stitch_test
+% mpiexec -np 4 stitch_test
+
+Should see something like:
+
+ nprocs in x, y, z: 2, 2, 1
+ block size in x, y, z: 2, 2, 3
+ increment in x, y, z: 3, 3, 1
+ total domain bounds (min) - (max): (0, 0, 0) - (13, 13, 4)
+ sweeping 0->n in X, then Y, then Z
+ tests passed
+
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+Build the 'stitch' python module
+--------------------------------
+
+The 'stitch' python module allows for creating, reading and 
+writing 'stitch' files.  It is particularly useful 
+for reading 'stitch' files written by 'spparks'.
+
+The python module should be build with gnu gcc.  It may be possible to 
+do otherwise but that has not been tested.  In general, the same compiler
+used to build python, numpy, and scipy should be used to build the stitch 
+module.
+
+Python 3, numpy, and scipy are required for building the 'stitch' python
+module.  This documentation was developed with the following versions.
+
+* gnu gcc 9.2.0
+* Python 3.6.9
+* numpy '1.19.2'
+* scipy '1.5.2'
+
+Change to stitch directory 
+% cd $SPPARKS/lib/stitch
+
+The files 'setup.py' and 'setup.flamer.cfg' are included in this directory.
+
+Building the python module uses the methods and tools deployed by numpy and
+scipy.  It uses the 'setup.py' script and the config file setup.cfg.  Copy
+the existing example config file 'setup.flamer.cfg' to 'setup.cfg'; edit
+'setup.cfg' to specify where the python module should be installed -- then 
+add this path to your PYTHONPATH.
+
+Build and install the python module.
+% python setup.py build
+% python setup.py install
+
+Some build 'warnings' may occur which are generally harmless.  On the other
+hand 'errors' are not good and must be addressed.  
+
+Verify install and PYTHONPATH are correctly set by launching python and
+importing the stitch module. Make sure not to do this in the source directory.
+
+If the following command succeeds, python module build and install is
+probably good.  Start an interactive python session by launching python 
+and import the stitch module:
+% python
+% from stitch.libstitch import libstitch
+
+As final verification of python module correctness, run the unit test; remove
+all stitch files prior to running the test -- otherwise the test will fail.
+% cd $SPPARKS/lib/stitch/verify
+% make clean
+
+Run unit test
+% python unit_cv_readwrite.py
+
+Screen output from test should look something like:
+
+.........
+----------------------------------------------------------------------
+Ran 9 tests in 9.383s
+
+OK

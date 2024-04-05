@@ -1,0 +1,111 @@
+<HTML>
+<CENTER><A HREF = "https://spparks.github.io">SPPARKS Website</A> - <A HREF = "Manual.html">SPPARKS Documentation</A> - <A HREF = "Section_commands.html#comm">SPPARKS Commands</A> 
+</CENTER>
+
+
+
+
+
+
+<HR>
+
+<H3>app_style diffusion/multiphase command 
+</H3>
+<P><B>Syntax:</B>
+</P>
+<PRE>app_style diffusion/multiphase 
+</PRE>
+<P><B>Examples:</B>
+</P>
+<PRE>app_style diffusion/multiphase
+diffusion/multiphase pin 1           # after creating sites
+diffusion/multiphase phase 2
+diffusion/multiphase phase 3
+diffusion/multiphase weight 0.5 pair 2 3 
+</PRE>
+<P><B>Description:</B>
+</P>
+<P>This is an on-lattice application which is a multi-species or
+multiphase extension to the single species or single phase
+<A HREF = "app_diffusion.html">diffusion</A> app.  If run with an atomic scale
+lattice, then this app allows definition of multiple atomic species
+via the <A HREF = "diffusion_multiphase.html">diffusion/multiphase</A> command it
+defines.  Likewise if run with a coarse-grained lattice, it allows
+definition of multiple phases.  The rest of this doc page uses the
+"phase" terminology.
+</P>
+<P>In general, diffusion can lead to phase separation when bond energies
+(energy of a pair of neighboring sites) between like phases are lower
+than bond energies between different phases.  The rate of phase
+separation and the degree to which it occurs can be controlled by
+setting the relative bond energies between different phases.
+</P>
+<P>For this app, each site has a phase value which is a value >= 1.
+There can be an arbitrary number of phases.  Note that if you want
+vacancies included in the model, they are specified as a distinct
+phase, just as Al or Cu atoms would be individual phases in an
+atomic-scale model.
+</P>
+<P>As illustrated in the example above, the
+<A HREF = "diffusion_multiphase.html">diffusion/multiphase</A> command is used with
+this application.  Every numeric phase (unique site value) must be set
+to either "phase" or "pin".  The "phase" keyword should be used if the
+phase is mobile (it diffuses).  The "pin" keyword should be used if it
+is immobile.  The "weight" keyword is used to define a pairwise energy
+between pairs of neighbor phases in the energy Hamiltonian for the
+model:
+</P>
+<PRE>Hi = Sum_j weight_ij 
+</PRE>
+<P>where Sum_j is a sum over all the neighbor sites of site I and
+weight_ij is the pairwise energy for the phases of site I and J.  Only
+pairs of unlike phases can be assigned a weight.  Pairs of like phases
+do not contribute to the site energy.  See the
+<A HREF = "diffusion_multiphase.html">diffusion/multiphase</A> command for details.
+</P>
+<P>Note that this equation means this app is effectively limited to the
+energy style <I>linear</I> option of the <A HREF = "app_diffusion.html">app_style
+diffusion</A> command.
+</P>
+<P>Also note that there should always be two or more non-pinned phases in
+your model.  Otherwise no diffusive exchanges between sites with
+different phases will take place.
+</P>
+<P>To run this application, an initial phase distribution on the lattice
+should be specified.  Each lattice site has an integer value which
+stores its phase label.  If only relative volume fractions of the
+phases is desired, the <A HREF = "set.html">set</A> command can be used to set
+values.  If there is structure to the initial phase distribution, this
+can be written to a SPPARKS input file and read via the
+<A HREF = "read_sites.html">read_sites</A> command; or, the <A HREF = "set.html">set stitch</A>
+command can be used to read phase distribution from a Stitch file
+formatted by the Stitch library included with SPPARKS.
+</P>
+<P>The examples/diffusion_multiphase directory has several scripts which
+illusrate use of this app; example scripts also demonstrate
+initializing phase distributions.
+</P>
+<UL><LI>in.pin_filler
+<LI>in.pairwise_weighs
+<LI>in.variable_volume_fraction 
+</UL>
+<HR>
+
+<P>The following additional command is defined by this application.
+</P>
+<DIV ALIGN=center><TABLE  BORDER=1 >
+<TR><TD ><A HREF = "diffusion_multiphase.html">diffusion/multiphase</A> </TD><TD > define phases and weights 
+</TD></TR></TABLE></DIV>
+
+<HR>
+
+<P><B>Restrictions:</B> none
+</P>
+<P><B>Related commands:</B>
+</P>
+<P><A HREF = "diffusion_multiphase.html">diffusion/multiphase</A>, <A HREF = "app_diffusion.html">app_style
+diffusion</A>
+</P>
+<P><B>Default:</B> none
+</P>
+</HTML>

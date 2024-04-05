@@ -1,0 +1,46 @@
+<HTML>
+<CENTER><A HREF = "https://spparks.github.io">SPPARKS Website</A> - <A HREF = "Manual.html">SPPARKS Documentation</A> - <A HREF = "Section_commands.html#comm">SPPARKS Commands</A> 
+</CENTER>
+
+
+
+
+
+
+<HR>
+
+<H3>reset_time command 
+</H3>
+<P><B>Syntax:</B>
+</P>
+<P>reset_time style options:pre
+</P>
+<P>style = <I>stitch</I> or <I>time</I>
+</P>
+<UL><LI>for style <I>stitch</I>, options = "stitch_file_name" "last" or "first" 
+</UL>
+<UL><LI>for style <I>time</I>, options = new time 
+</UL>
+<P><B>Examples:</B>
+</P>
+<PRE>reset_time stitch outputfile.st last
+reset_time stitch outputfile.st first
+reset_time 0.0
+reset_time 100.0 
+</PRE>
+<P><B>Description:</B>
+</P>
+<P>Set the current time to the specified value.  This can be useful
+if a preliminary run was performed and you wish to reset the time
+before performing a subsequent run.  For the <I>stitch</I> style option, 
+this is particularly useful for setting the current simulation time 
+to either the 'first' time step or 'last' time step contained in 
+specified stitch file: 'stitch_file_name'.
+</P>
+<P><B>Restrictions:</B> none
+</P>
+<P><B>Related commands:</B> none
+</P>
+<P><B>Default:</B> none
+</P>
+</HTML>

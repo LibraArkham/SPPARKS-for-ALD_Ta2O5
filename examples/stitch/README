@@ -1,0 +1,144 @@
+========================
+What's in this directory
+========================
+
+There are several examples contained within the following subdirectories.  Each
+example demonstrates the use of *stitch* and related commands.  All of the
+examples use *dump stitch* commands for output purposes; some use *set stitch*
+and *reset_time* commands.
+
+* *dump_and_set_commands*: this subdirectory contains the following *spparks*
+  input files
+ 
+  * *dump_equiaxed.in*: runs *potts* model to produce equiaxed microstructures;
+    write a *stitch* file.
+
+  * *dump_raster.in*: runs 2D *potts/am/weld* model to simulate AM build raster pattern 
+    microstructures; writes a *stitch* file; before running this example, 
+    run python script to initialize a stitch file. 
+    "python init.py init --field='d1' 0 200 0 200 0 1"; this command 
+    will create a stitch file 'init.st' which as 'site' values and 
+    'd1' values.  This example demonstrates using the spparks command:
+    'set		 site stitch init.st first'
+
+  * *dump_reset_equiaxed.in*: uses *reset_time* command. This allows *dump
+    stitch* to write a different simulation time than the current *spparks*
+    simulation time. For example, it may be desireable to run a *potts* model
+    simulation for purposes of producing an equiaxed microstructure needed for
+    a welding simulation.  During *potts* model simulation, time evolves
+    forward; subsquently a welding simulation may be needed with the initial
+    microstructure -- but at time *t=0.0*; by using *reset_time 0.0* after
+    *run* command during *potts* simulation, an initial microstructure
+    appropriate for the welding simulation is written at *t=0.0*
+
+  * *set_raster.in*: this example demonstrates use of *set stitch* commands for
+    purposes of intializing a microstructure from an existing *stitch* file.  This script 
+    requires output *equiaxed.st* from *dump_equiaxed.in* calculation.
+
+* *am_demo*: this subdirectory contains the following files; this sequence of
+  runs can take upto 15 or 20 minutes to run depending upon your processor etc.
+  Currently, the 'run.sh' script below is set to run in serial but a speed-up 
+  can be achieved by running on 4 processors; adjust script appropriately.   
+  Make sure to adjust path to SPPARKS executable at top of 'run.sh' script.
+
+  * *run.sh*: bash script which orchestrates a series of small AM simulations 
+    which use *stitch*; 4 layer build simulation is scripted.
+  * *in.init*: spparks input file used to initialize a stitch file on 
+    first layer of 4 layer build.
+  * *in.am*: spparks input file which uses a *am cartesian_layer* command 
+    to simulate raster patterns on each layer.  Each of the above 
+    described spparks runs use 'Stitch' progressive IO by writing the 
+    the file 'am_demo.st'; this file is processed with the following 
+    python script to visualize evolution of microstructure.
+  * *process_stitch.py*: python script for generating image files of build 
+    simulation.  This file should be edited -- in particular the bb box 
+    ranges should be edited to specify which 2D cuts to visualize; for this 
+    example, edit the 'bz' variable to select which z-cut to visualize.
+
+    Run the script: 
+
+         % python process_stitch.py -pam_demo
+
+* *stitching_rectangular_domain*: this subdirectory contains a stitching 
+  example.  It uses the *spparks* app potts/am/path/gen to create a series 
+  of computational volumes CVs.  To run the example:
+
+  #0) rm *.st
+  #1) spk_flamer.gnu < in.pathgen
+  #2) stitch_rectangle.sh
+  #3) python process_stitch -pstitch_rectangle
+
+  Step #0) Make sure to remove any pre-existing stitch files.
+
+  Step #1) above creates a file called 'pathgen.dat'; this file contains a 
+  series of computational volumes the union of which form a larger AM 
+  microstructure simulation.  See 'in.path_gen' details of the larger domain.
+  Also, carefully read the SPPARKS documentation for *app potts/am/path/gen* 
+  as well as the *am pathgen* command.  This documentation along with the 
+  should be sufficient to understand the example.  To verify correctness 
+  of Step #1) diff the file created using following bash command:
+   
+   $diff pathgen.dat stitch_rectangle.dat
+
+  These two files should be identical.  The generated file 'pathgen.dat'
+  contains a series of CVs.  
+
+  Microstructure simulations are conducted on each CV in Step #2) above using a
+  bash script.  This script is setup to run on 16 processor and will complete
+  the entire set of simulations in 10 to 15 minutes depending upon the machine
+  -- the script can easily be edited to change num procs to 4 or 8.  This
+  script only requires the path to a spparks executable -- at the top of the
+  script; otherwise no other edits are necessary;  all inputs to the simulation
+  are given either in 'in.path_gen' or 'in.am'; These input scripts can easily
+  be modified to a represent a different domain size and AM process -- they are
+  quite general in this respect.  Results from each simulation are appended
+  together in the stitch file 'stitch_rectangle.st' to form a microstructure
+  simulation on the larger intended domain as described/input by the input file
+  'in.path_gen'.
+
+  Edit process_stitch_rectangle.py as necessary; make microstructure plots 
+  using Step #3).
+
+
+
+How to run scripts
+++++++++++++++++++
+
+Before running calculations, always run *make clean* to remove any
+preexisting *stitch* files.  *Stitch* is designed to append *outputs* which can
+be produce undesireable results if that is not intended.  Note that examples
+are intentionally created to use precomputed results.  However, calculations
+should not be repeated otherwise spurious results will be obtained.
+
+Note that all of examples can be run in *serial* or *parallel*.  However, a
+serial build of *spparks* with *stitch* will not work. 
+
+Serial calculations: Examples
+-----------------------------
+
+* *./spk_flamer.gnu < dump_equiaxed.in*
+* *./spk_flamer.gnu < set_raster.in*: not recommended for serial calculations
+  due to runtime; requires only a couple minutes when run parallel.
+
+Parallel calculations: Examples
+-------------------------------
+
+* *mpiexec -np 8 ./spk_flamer.gnu < dump_equiaxed.in*
+* *mpiexec -np 8 ./spk_flamer.gnu < set_raster.in*
+
+Checking results
+++++++++++++++++
+
+Each of the above runs produces a *stitch* file.  The exact name of the stitch 
+file can be found in the *spparks* script input file.  All of the *stitch* file 
+outputs have the *.st* extension.  After confirming the *stitch* file was produced, 
+then a visual inspection of results can be obtained if the *python* extension 
+to *stitch* has been built and is in your *PYTHONPATH*.  In each case, to 
+run the python script, the <prefix> filename less the extension *.st* is needed 
+as a command line parameter for the image script "process_stitch_demo.py".  This 
+script produces a set of ".png* files that can be visualized.  After running the 
+above *dump_equiaxed* and *set_raster* scripts above, run the following *python* 
+scripts to visualize the microstructures produced and stored in *stitch* files.
+
+* *python process_stitch_demo.py -pequiaxed*
+* *python process_stitch_demo.py -praster_with_equiaxed*

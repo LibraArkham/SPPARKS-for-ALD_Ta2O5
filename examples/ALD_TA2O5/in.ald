@@ -1,0 +1,29 @@
+seed 12345
+
+app_style ald/Ta2O5
+
+read_sites data.ald
+
+sector no
+
+solve_style linear
+
+#event	type	from		to		  A			n	E(eV)	coord	pressureOn	reaction
+event   1       O           TaX5O     -         -   -       -       -           TaX5+O->TaX5...O
+event   1       Ta          TaO       -         -   -       -       -           Ta+O->Ta...O
+event   1       TaX         TaXO      -         -   -       -       -           TaX+O->TaX...O
+
+#event	type	from		to		  from		to		A			n	E(eV)	coord	pressureOn	reaction
+event   2       TaX5O       TaX4O     Ta        TaX     -           -   -       -       -           TaX5O+Ta->TaX4O+TaX
+event   2       TaX4O       O         VAC       TaX4    -           -   -       -       -           TaX4O+VAC->O+TaX4
+
+pulse_time		0.0001 	0.0001 #T1    T3
+purge_time		0.0001 	0.0001 #T2    T4  and cycle = T1+T2+T3+T4
+
+temperature	0.04308 #400K
+
+diag_style      ald/Ta2O5 stats yes list events QCM
+stats           .000005
+dump            1 text .0001 dump.ald  id i1 i2 x y z
+
+run             0.004
