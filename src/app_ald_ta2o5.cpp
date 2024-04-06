@@ -328,7 +328,7 @@ double AppAldTa2o5::site_propensity(int i)
 
   //type I, check species of sites and consider possible events
 
-  // count_coordO was added here to prevent adsorption of HfX4 
+  // count_coordO was added here to prevent adsorption of metal precursor 
   // on the low coordinate oxygen at sublayer
 
   for (m = 0; m < none; m++) {
@@ -453,7 +453,7 @@ void AppAldTa2o5::site_event(int i, class RandomPark *random)
   echeck[isite] = 1;
 
   // go from site i to first and second neighbor in all type
-  // for HfX4O, HfX4OH, and HfX2 go to the third and fourth neighbor to set mask
+  
   for (n = 0; n < numneigh[i]; n++) {
     m = neighbor[i][n];
     isite = i2site[m];
@@ -470,37 +470,6 @@ void AppAldTa2o5::site_event(int i, class RandomPark *random)
           esites[nsites++] = isite;
           echeck[isite] = 1;
         }
-	//update mask up to fourth neighbor for HfX4O and HfX4OH
-	if ((elcoord == O || elcoord == OH) && (element[i]== HfX4O || element[i]== HfX4OH) && rstyle == 1) {
-
-	   for (int ss = 0; ss< numneigh[mm]; ss++) {
-	     int s = neighbor[mm][ss];
-	     for (int ll = 0; ll< numneigh[s]; ll++) {
-	       int l = neighbor[s][ll];
-	       isite = i2site[l];
-	       if (isite >= 0 && echeck[isite] == 0) {
-			 propensity[isite] = site_propensity(l);
-			 esites[nsites++] = isite;
-			 echeck[isite] = 1;
-	       }
-	     }
-	   }
-	}
-	if ((elcoord == HfX4OH || elcoord == HfX4O) && (element[i]== OH  || element[i]== O) && rstyle == 1){
-
-	   for (int ss = 0; ss< numneigh[mm]; ss++) {
-	     int s = neighbor[mm][ss];
-	     for (int ll = 0; ll< numneigh[s]; ll++) {
-	       int l = neighbor[s][ll];
-	       isite = i2site[l];
-	       if (isite >= 0 && echeck[isite] == 0) {
-			 propensity[isite] = site_propensity(l);
-			 esites[nsites++] = isite;
-			 echeck[isite] = 1;
-	       }
-	     }
-	   }
-	}
      }
   }
 
@@ -544,48 +513,11 @@ void AppAldTa2o5::site_event(int i, class RandomPark *random)
           esites[nsites++] = isite;
           echeck[isite] = 1;
         }
-        if ((elcoord == HfX2O || elcoord == HfHX2O || elcoord == HfH2X2O || elcoord == HfH4X4O) && element[i] == O ) {
-	   for (int ss = 0; ss< numneigh[mm]; ss++) {
-	     int s = neighbor[mm][ss];
-	     isite = i2site[s];
-	     if (isite >= 0 && echeck[isite] == 0) {
-		 propensity[isite] = site_propensity(s);
-		 esites[nsites++] = isite;
-		 echeck[isite] = 1;
-	     }
-	   }
-	}
-        if ((elcoord == HfX2OH || elcoord == HfHX2OH || elcoord == HfH2X2OH || elcoord == HfH4X4OH) && element[i] == OH ) {
-	   for (int ss = 0; ss< numneigh[mm]; ss++) {
-	     int s = neighbor[mm][ss];
-	       isite = i2site[s];
-	       if (isite >= 0 && echeck[isite] == 0) {
-			 propensity[isite] = site_propensity(s);
-			 esites[nsites++] = isite;
-			 echeck[isite] = 1;
-		    }
-	     }
-	   }
-        if ((elcoord == HfX2 || elcoord == HfHX2 || elcoord == HfH2X2) && element[i] == VACANCY ) {
-	   for (int ss = 0; ss< numneigh[mm]; ss++) {
-	     int s = neighbor[mm][ss];
-	     for (int ll = 0; ll< numneigh[s]; ll++) {
-	       int l = neighbor[s][ll];
-	       isite = i2site[l];
-	       if (isite >= 0 && echeck[isite] == 0) {
-			 propensity[isite] = site_propensity(l);
-			 esites[nsites++] = isite;
-			 echeck[isite] = 1;
-	       }
-	     }
-	   }
-	  }
-	}
+       }
     }
   }
 
   solve->update(nsites,esites,propensity);
-
    // clear echeck array
 
   for (m = 0; m < nsites; m++)  {echeck[esites[m]] = 0; esites[m]=0;}
