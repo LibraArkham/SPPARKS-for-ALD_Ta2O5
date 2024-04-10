@@ -93,9 +93,9 @@ class AppAldTa2o5 : public AppLattice {
   void grow_reactions(int);
   void count_coord(int,int);
   void count_coordO(int);
-  void remove_mask(int);
+  void remove_mask(int,int j = 0);
   void put_mask(int);
-  void update_coord(int,int,int,int);
+  void update_coord(int,int,int,int,int);
 };
 
 }
