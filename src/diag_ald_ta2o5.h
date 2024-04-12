@@ -19,12 +19,12 @@
 ------------------------------------------------------------------------- */
 
 #ifdef DIAG_CLASS
-DiagStyle(ald/ta2o5,DiagAld)
+DiagStyle(ald/ta2o5,DiagAldta2o5)
 
 #else
 
-#ifndef SPK_DIAG_ALD
-#define SPK_DIAG_ALD
+#ifndef SPK_DIAG_ALD_Ta2o5_H
+#define SPK_DIAG_ALD_Ta2o5_H
 
 #include "diag.h"
 
@@ -40,7 +40,7 @@ class DiagAldta2o5 : public Diag {
   void stats_header(char *);
 
  private:
-  class AppAldta2o5 *appaldta2o5;
+  class AppAldTa2o5 *appaldta2o5;
   int nlist;
   char **list;
   int *which,*index,*ivector;

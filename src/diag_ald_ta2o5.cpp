@@ -32,15 +32,18 @@
 using namespace SPPARKS_NS;
 
 
-enum{VACANCY,O,TaO,TaX4,TaX4O,TaX,TaX5O,Ta,TaXO
-};       // same as DiagAld
+enum{VACANCY,O,//2
+TaX5O,//3 TaX5 adsorption
+TaX4O,TaX4,TaX,Ta,//7 TaX5 surface species
+OTaX,OTa,//9 oxygen pulse 
+QCM,EVENTS,ONE,TWO,THREE};
 
 
 /* ---------------------------------------------------------------------- */
 
 DiagAldta2o5::DiagAldta2o5(SPPARKS *spk, int narg, char **arg) : Diag(spk,narg,arg)
 {
-  if (strcmp(app->style,"ald") != 0)
+  if (strcmp(app->style,"ald/ta2o5") != 0)
     error->all(FLERR,"Diag_style ald requires app_style ald");
 
   nlist = 0;
@@ -91,9 +94,9 @@ void DiagAldta2o5::init()
       if (strcmp(list[i],"O") == 0) which[i] = O;
       else if (strcmp(list[i],"QCM") == 0) which[i] = QCM;
       else if (strcmp(list[i],"Ta") == 0) which[i] = Ta;
-      else if (strcmp(list[i],"TaO") == 0) which[i] = TaO;
+      else if (strcmp(list[i],"OTa") == 0) which[i] = OTa;
       else if (strcmp(list[i],"TaX") == 0) which[i] = TaX;
-      else if (strcmp(list[i],"TaXO") == 0) which[i] = TaXO;
+      else if (strcmp(list[i],"OTaX") == 0) which[i] = OTaX;
       else if (strcmp(list[i],"TaX4O") == 0) which[i] = TaX4O;
       else if (strcmp(list[i],"TaX5O") == 0) which[i] = TaX5O;
       else if (strcmp(list[i],"VAC") == 0) which[i] = VACANCY;
@@ -133,8 +136,8 @@ void DiagAldta2o5::compute()
   int sites[800],ivalue;
 // here as well we have to consider some modification, generally it does not seem so difficult
   if (siteflag) {
-    sites[O] = 0; sites[Ta] = 0; sites[TaO] = 0;sites[VACANCY] = 0;
-    sites[TaX4] = 0; sites[TaX4O] = 0; sites[TaX] = 0; sites[TaXO] = 0; sites[TaX5O] = 0;  
+    sites[O] = 0; sites[Ta] = 0; sites[OTa] = 0;sites[VACANCY] = 0;
+    sites[TaX4] = 0; sites[TaX4O] = 0; sites[TaX] = 0; sites[OTaX] = 0; sites[TaX5O] = 0;  
     int *element = appaldta2o5->element;
     int nlocal = appaldta2o5->nlocal;
     for (int i = 0; i < nlocal; i++) sites[element[i]]++;
@@ -144,9 +147,9 @@ void DiagAldta2o5::compute()
     if (which[i] == O) ivalue = sites[O];
     else if (which[i] == Ta) ivalue = sites[Ta];
     else if (which[i] == VACANCY) ivalue = sites[VACANCY];
-    else if (which[i] == TaO) ivalue = sites[TaO];
+    else if (which[i] == OTa) ivalue = sites[OTa];
     else if (which[i] == TaX) ivalue = sites[TaX];
-    else if (which[i] == TaXO) ivalue = sites[TaXO];
+    else if (which[i] == OTaX) ivalue = sites[OTaX];
     else if (which[i] == TaX4) ivalue = sites[TaX4];
     else if (which[i] == TaX4O) ivalue = sites[TaX4O];
     else if (which[i] == TaX5O) ivalue = sites[TaX5O];
@@ -155,7 +158,7 @@ void DiagAldta2o5::compute()
     else if (which[i] == ONE) ivalue = appaldta2o5->scount[index[i]];
     else if (which[i] == TWO) ivalue = appaldta2o5->dcount[index[i]];
     else if (which[i] == THREE) ivalue = appaldta2o5->vcount[index[i]];
-    else if (which[i] == QCM) ivalue = 16*sites[O]+17*sites[OH]+178.5*sites[Hf]+18*sites[OH2]+240.5*sites[OH2HfX]+241.5*sites[OH2HfHX]+240.5*sites[OHHfHX]+196.5*sites[OH2Hf]
+    else if (which[i] == QCM) ivalue = 16*sites[O]+181*sites[Ta]+197*sites[OTa]+226*sites[TaX]+242*sites[OTaX]+361*sites[TaX4]+377*sites[TaX4O]+422*sites[TaX5O];
 
     MPI_Allreduce(&ivalue,&ivector[i],1,MPI_INT,MPI_SUM,world);
   }
@@ -166,7 +169,7 @@ void DiagAldta2o5::compute()
 void DiagAldta2o5::stats(char *str)
 {
   for (int i = 0; i < nlist; i++) {
-    sprintf(str," %d",ivector[i]);
+    sprintf(str,"%6d",ivector[i]);
     str += strlen(str);
   }
 }
@@ -176,7 +179,7 @@ void DiagAldta2o5::stats(char *str)
 void DiagAldta2o5::stats_header(char *str)
 {
   for (int i = 0; i < nlist; i++) {
-    sprintf(str," %s",list[i]);
+    sprintf(str,"%6s",list[i]);
     str += strlen(str);
   }
 }

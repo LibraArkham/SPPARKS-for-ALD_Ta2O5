@@ -3,9 +3,9 @@
 
 
 #Initialize
-seed 12345
+seed 345
 
-app_style ald/Ta2O5
+app_style ald/ta2o5
 
 read_sites data.ald
 
@@ -14,22 +14,70 @@ sector no
 solve_style linear
 
 
+
+
 #Event Set
 
 #Event I
 
-#event	type	from		to		  A			n	E(eV)	coord	pressureOn	reaction
+#event	type	from		to		  A			       n	  E(eV)	  coord	  pressureOn	reaction
 
-#precursor adsorption
-event   1       O           TaX5O     -         -   -       -       -           TaX5+O->TaX5...O
-event   1       Ta          TaO       -         -   -       -       -           Ta+O->Ta...O
+#TaX5 adsorption
+event   1       O           TaX5O     41822.40082      0      0.00    1       1             TaX5+O->TaX5...O
+event   1       O           TaX5O     41822.40082      0      0.00    2       1             TaX5+O->TaX5...O
+event   1       O           TaX5O     41822.40082      0      0.00    3       1             TaX5+O->TaX5...O
 
-#precursor desorption
-event   1       TaX5O       O         -         -   -       -       -           TaX5...O->TaX5+O
-event   1       TaO         Ta        -         -   -       -       -           Ta...O->Ta+O
+#oxygen adsorption
+event   1       Ta          OTa       87577.68849      0      0.00    2       2             Ta+O->Ta...O
+event   1       Ta          OTa       87577.68849      0      0.00    3       2             Ta+O->Ta...O
+
+event   1       Ta          OTa       87577.68849      0      0.00    -8      2             Ta+O->Ta...O
+event   1       Ta          OTa       87577.68849      0      0.00    -7      2             Ta+O->Ta...O
+
+event   1       Ta          OTa       87577.68849      0      0.20    -18     2             Ta+O->Ta...O
+event   1       Ta          OTa       87577.68849      0      0.20    -17     2             Ta+O->Ta...O
+
+event   1       Ta          OTa       87577.68849      0      0.20    -28     2             Ta+O->Ta...O
+event   1       Ta          OTa       87577.68849      0      0.20    -27     2             Ta+O->Ta...O
+
+event   1       Ta          OTa       87577.68849      0      0.20    -38     2             Ta+O->Ta...O
+event   1       Ta          OTa       87577.68849      0      0.20    -37     2             Ta+O->Ta...O
+
+
+#TaX5 desorption
+event   1       TaX5O       O         8.334647E012     0      0.74    2       0             TaX5...O->TaX5+O
+event   1       TaX5O       O         8.334647E012     0      0.74    3       0             TaX5...O->TaX5+O
+event   1       TaX5O       O         8.334647E012     0      1.11    4       0             TaX5...O->TaX5+O
+
+#oxygen desorption
+event   1       OTa         Ta        8.334647E012     0      1.03    2       0             Ta...O->Ta+O
+event   1       OTa         Ta        8.334647E012     0      1.03    3       0             Ta...O->Ta+O
+event   1       OTa         Ta        8.334647E012     0      1.03    3       0             Ta...O->Ta+O
+
+event   1       OTa         Ta        8.334647E012     0      1.03    -8      0             Ta...O->Ta+O
+event   1       OTa         Ta        8.334647E012     0      1.03    -7      0             Ta...O->Ta+O
+event   1       OTa         Ta        8.334647E012     0      1.03    -6      0             Ta...O->Ta+O
+
+event   1       OTa         Ta        8.334647E012     0      1.03    -18     0             Ta...O->Ta+O
+event   1       OTa         Ta        8.334647E012     0      1.03    -17     0             Ta...O->Ta+O
+event   1       OTa         Ta        8.334647E012     0      1.03    -16     0             Ta...O->Ta+O
+
+
+event   1       OTa         Ta        8.334647E012     0      0.74    -28     0             Ta...O->Ta+O
+event   1       OTa         Ta        8.334647E012     0      0.74    -27     0             Ta...O->Ta+O
+event   1       OTa         Ta        8.334647E012     0      0.74    -26     0             Ta...O->Ta+O
+
+event   1       OTa         Ta        8.334647E012     0      0.74    -38     0             Ta...O->Ta+O
+event   1       OTa         Ta        8.334647E012     0      0.74    -37     0             Ta...O->Ta+O
+event   1       OTa         Ta        8.334647E012     0      0.74    -36     0             Ta...O->Ta+O
 
 #oxidation
-event   1       TaX         TaXO      -         -   -       -       -           TaX+O->TaX...O
+event   1       TaX         OTaX      87577.68849      0      0.00    3       2             TaX+O->TaX...O
+event   1       TaX         OTaX      87577.68849      0      0.00    -7      2             TaX+O->TaX...O
+event   1       TaX         OTaX      87577.68849      0      0.20    -17     2             TaX+O->TaX...O
+event   1       TaX         OTaX      87577.68849      0      0.20    -27     2             TaX+O->TaX...O
+event   1       TaX         OTaX      87577.68849      0      0.20    -37     2             TaX+O->TaX...O
+
 
 
 
@@ -39,30 +87,56 @@ event   1       TaX         TaXO      -         -   -       -       -           
 
 
 
+
 #Event III
 
-#event	type	from		to		  from		to		A			n	E(eV)	coord	pressureOn	reaction
+#event	type	from		to		  from		to		A			       n	E(eV)	coord	pressureOn	reaction
 
 #TaX5 dissociation
-event   3       TaX5O       TaX4O     Ta        TaX     -           -   -       -       -           TaX5O+Ta->TaX4O+TaX
+event   3       TaX5O       TaX4O     Ta        TaX     8.334647E012       0    0.10    4       0           TaX5O+Ta->TaX4O+TaX
+event   3       TaX5O       TaX4O     Ta        TaX     8.334647E012       0    0.10    -6      0           TaX5O+Ta->TaX4O+TaX
 
-#Ta densification
-event   3       VAC         TaX4      TaX4O     O       -           -   -       -       -           TaX4O+VAC->O+TaX4
+#TaX4 densification
+event   3       VAC         TaX4      TaX4O     O       8.334647E012       0    0.30    -10     0           TaX4O+VAC->O+TaX4
+event   3       VAC         TaX4      TaX4O     O       8.334647E012       0    0.40    -20     0           TaX4O+VAC->O+TaX4
+event   3       VAC         TaX4      TaX4O     O       8.334647E012       0    0.50    -30     0           TaX4O+VAC->O+TaX4
 
 #oxygen densification
-event   3       VAC         O         TaO       Ta      -           -   -       -       -           TaO+VAC->Ta+O
+event   3       VAC         O         OTa       Ta      8.334647E012       0    0.40    2       0           OTa+VAC->Ta+O
+event   3       VAC         O         OTa       Ta      8.334647E012       0    0.40    3       0           OTa+VAC->Ta+O
+event   3       VAC         O         OTa       Ta      8.334647E012       0    0.40    4       0           OTa+VAC->Ta+O
 
-#Ta reverse densification
-event   3       TaX4        VAC       O         TaX4O   -           -   -       -       -           O+TaX4->TaX4O+VAC
+event   3       VAC         O         OTa       Ta      8.334647E012       0    0.40    -8      0           OTa+VAC->Ta+O
+event   3       VAC         O         OTa       Ta      8.334647E012       0    0.40    -7      0           OTa+VAC->Ta+O
+event   3       VAC         O         OTa       Ta      8.334647E012       0    0.40    -6      0           OTa+VAC->Ta+O
+
+event   3       VAC         O         OTa       Ta      8.334647E012       0    0.40    -18     0           OTa+VAC->Ta+O
+event   3       VAC         O         OTa       Ta      8.334647E012       0    0.40    -17     0           OTa+VAC->Ta+O
+event   3       VAC         O         OTa       Ta      8.334647E012       0    0.40    -16     0           OTa+VAC->Ta+O
+
+event   3       VAC         O         OTa       Ta      8.334647E012       0    0.40    -28     0           OTa+VAC->Ta+O
+event   3       VAC         O         OTa       Ta      8.334647E012       0    0.40    -27     0           OTa+VAC->Ta+O
+event   3       VAC         O         OTa       Ta      8.334647E012       0    0.40    -26     0           OTa+VAC->Ta+O
+
+event   3       VAC         O         OTa       Ta      8.334647E012       0    0.40    -38     0           OTa+VAC->Ta+O
+event   3       VAC         O         OTa       Ta      8.334647E012       0    0.40    -37     0           OTa+VAC->Ta+O
+event   3       VAC         O         OTa       Ta      8.334647E012       0    0.40    -36     0           OTa+VAC->Ta+O
+
+#TaX4 reverse densification
+event   3       TaX4        VAC       O         TaX4O   8.334647E012       0    0.60    2       0           O+TaX4->TaX4O+VAC
+event   3       TaX4        VAC       O         TaX4O   8.334647E012       0    0.60    -8      0           O+TaX4->TaX4O+VAC
+event   3       TaX4        VAC       O         TaX4O   8.334647E012       0    0.60    -18     0           O+TaX4->TaX4O+VAC
+event   3       TaX4        VAC       O         TaX4O   8.334647E012       0    0.60    -28     0           O+TaX4->TaX4O+VAC
+event   3       TaX4        VAC       O         TaX4O   8.334647E012       0    0.60    -38     0           O+TaX4->TaX4O+VAC
 
 #oxygen reverse densification
-event   3       O           VAC       Ta        TaO      -           -   -       -       -          Ta+O->TaO+VAC
+#event   3      O           VAC       Ta        OTa     -                  0    -       -       0          Ta+O->OTa+VAC
 
 
 
 #Time Set (s)
-pulse_time		0.0001 	0.0001 #T1    T3
-purge_time		0.0001 	0.0001 #T2    T4  and cycle = T1+T2+T3+T4
+pulse_time		0.7 	0.7  #T1    T3
+purge_time		0.1 	0.1  #T2    T4  and cycle = T1+T2+T3+T4
 
 
 
@@ -73,8 +147,8 @@ temperature	0.04308      #400K
 
 
 #Output
-diag_style      ald/Ta2O5 stats yes list events QCM
-stats           .000005
+diag_style      ald/ta2o5 stats yes list events QCM
+stats           .0005
 dump            1 text .0001 dump.ald  id i1 i2 x y z
 
-run             0.004
+run             16
