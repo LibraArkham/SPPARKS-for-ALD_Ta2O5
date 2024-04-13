@@ -94,6 +94,7 @@ void DiagAldta2o5::init()
       if (strcmp(list[i],"O") == 0) which[i] = O;
       else if (strcmp(list[i],"QCM") == 0) which[i] = QCM;
       else if (strcmp(list[i],"Ta") == 0) which[i] = Ta;
+      else if (strcmp(list[i],"TaX4") == 0) which[i] = TaX4;
       else if (strcmp(list[i],"OTa") == 0) which[i] = OTa;
       else if (strcmp(list[i],"TaX") == 0) which[i] = TaX;
       else if (strcmp(list[i],"OTaX") == 0) which[i] = OTaX;
@@ -169,7 +170,7 @@ void DiagAldta2o5::compute()
 void DiagAldta2o5::stats(char *str)
 {
   for (int i = 0; i < nlist; i++) {
-    sprintf(str,"%6d",ivector[i]);
+    sprintf(str," %6d ",ivector[i]);
     str += strlen(str);
   }
 }
@@ -179,7 +180,7 @@ void DiagAldta2o5::stats(char *str)
 void DiagAldta2o5::stats_header(char *str)
 {
   for (int i = 0; i < nlist; i++) {
-    sprintf(str,"%6s",list[i]);
+    sprintf(str," %6s ",list[i]);
     str += strlen(str);
   }
 }

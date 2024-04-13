@@ -691,38 +691,38 @@ void AppAldTa2o5::grow_reactions(int rstyle)
 void AppAldTa2o5::update_coord(int elcoord, int i, int j, int k, int which)
 { 
   //type1
-  if (j==-1 && k==-1){
-    if (elcoord == O  && element[i] == TaX5O ) 
+  
+    if ((elcoord == O  && element[i] == TaX5O) && (j == -1)) 
     {//Adsorption of TaX5
       coord[i]++;
       put_mask(i);
     }
-    else if (elcoord == TaX5O && element[i] == O )
+    else if ((elcoord == TaX5O && element[i] == O ) && (j == -1))
     {//Desorption of TaX5
       coord[i]--;
       remove_mask(i);
       count_coordO(i);
     }
-    else if (elcoord == Ta  && element[i] == OTa ) 
+    else if ((elcoord == Ta  && element[i] == OTa ) && (j == -1))
     {//Adsorption of oxygen
       coord[i]++;
     }
-    else if (elcoord == OTa && element[i] == Ta ) 
+    else if ((elcoord == OTa && element[i] == Ta ) && (j == -1))
     {//Desorption of oxygen
       coord[i]--;
     }
-    else if (elcoord == TaX  && element[i] == OTaX ) 
+    else if ((elcoord == TaX  && element[i] == OTaX ) && (j == -1))
     {//Oxidation
       coord[i]++;
     }
-  }
+  
   //type2
   /*else if (j!=-1 && k==-1) {
     count_coord(i);
     count_coord(j);
   }*/
   //type3
-  else if (j==-1 && k!=-1) {
+  
     
   if ((elcoord == VACANCY) && (element[i] == TaX4) && ( element[j] == O)) {
      // TaX4 densification
@@ -733,8 +733,8 @@ void AppAldTa2o5::update_coord(int elcoord, int i, int j, int k, int which)
         if (element[i] == TaX4){
             put_mask(i); // Put mask on new Zn site
         }}
-  else if ((elcoord == VACANCY) && (element[i] == O) && (element[j] == Ta))
-  {//Ta densification
+  else if ((elcoord == OTa) && (element[i] == Ta) && (element[j] == O) && ( k == -1))
+  {//oxygen densification
     count_coord(i,j);
     count_coordO(j);
   }
@@ -747,7 +747,7 @@ void AppAldTa2o5::update_coord(int elcoord, int i, int j, int k, int which)
   }
   
   else if ((elcoord == O) && (element[i] == VACANCY) && (element[j] == OTa))
-  {//Ta Reverse densification
+  {//oxygen Reverse densification
 		count_coord(i,j);
 		coord[j]++;
   }
@@ -759,7 +759,7 @@ void AppAldTa2o5::update_coord(int elcoord, int i, int j, int k, int which)
   coord[j]++;
   put_mask(j);
   }
-  }
+  
 }
 
 /* ----------------------------------------------------------------------
@@ -1006,7 +1006,7 @@ void AppAldTa2o5::remove_mask(int i, int j) // j flag for when Zn densification
 	esites[nsites++] = isite;
     echeck[isite] = 1;
 // Remove mask from oxygen sites after desorption
-	if ( element[i] == O){
+	if ( element[i] == O || element[i] == TaX4O){
 	  	for (int n = 0; n < numneigh[i]; n++) {
 			int nn = neighbor[i][n];
 			isite = i2site[nn];

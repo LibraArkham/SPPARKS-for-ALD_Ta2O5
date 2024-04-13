@@ -174,7 +174,7 @@ def cif2pos(cif_file, pos_file, facet, layers, supercell):
 
     # 4. 输出切割后的结构
     io.write('slab.xyz', slab)  # 将切好的(111)晶面保存为新的xyz文件
-    io.write('slab.cif', slab)  # 将切好的(111)晶面保存为新的xyz文件
+    io.write('slab.cif', slab)  # 将切好的(111)晶面保存为新的cif文件
     io.write('POSCAR',slab_sort,direct=True)
     # element_dict = {'Ta':2,'O':1} # 元素对应的数字表示
 
@@ -182,7 +182,7 @@ if __name__ == '__main__':
     outfile = 'data.ald' # 输出文件
     cif_file =  'Ta2O5.cif' # 输入文件
     facet = (1,1,1)# 晶面
-    layers =  10 # 层数
+    layers =  5 # 层数
     supercell = (4,4,1)# 扩胞
     sub_layers =  2 # subatrate
     neighbor_distance = 2.5 # 构建近邻列表距离
