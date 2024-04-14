@@ -694,8 +694,8 @@ temperature 0.02585 # 300 K
 # pressure in units of torr
 
 
-diag_style      ald/zno stats yes list events  QCM OXYGEN ZINC HYDROGEN MEZ LIGANDS Zn
+diag_style      ald/zno stats yes list events  QCM OXYGEN ZINC HYDROGEN MEZ LIGANDS Zn ZnX2O O ZnX ZnXO
 stats           .001
 dump            1 text .005 dump.ald  id i1 i2 x y z
 
-run             16.
+run             8.

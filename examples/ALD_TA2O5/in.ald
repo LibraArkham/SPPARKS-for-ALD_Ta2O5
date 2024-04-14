@@ -93,8 +93,8 @@ event   1       TaX         OTaX      87577.68849      0      0.20    -37     2 
 #event	type	from		to		  from		to		A			       n	E(eV)	coord	pressureOn	reaction
 
 #TaX5 dissociation
-event   3       TaX5O       TaX4O     Ta        TaX     8.334647E012       0    0.10     4       0           TaX5O+Ta->TaX4O+TaX
-event   3       TaX5O       TaX4O     Ta        TaX     8.334647E012       0    0.10     -6      0           TaX5O+Ta->TaX4O+TaX
+event   3       TaX5O       TaX4O     Ta        TaX     8.334647E012       0    0.10     4      0           TaX5O+Ta->TaX4O+TaX
+event   3       TaX5O       TaX4O     Ta        TaX     8.334647E012       0    0.10     -6     0           TaX5O+Ta->TaX4O+TaX
 
 #TaX4 densification
 event   3       VAC         TaX4      TaX4O     O       8.334647E012       0    0.30    -10     0           TaX4O+VAC->O+TaX4
@@ -147,7 +147,7 @@ temperature	0.04308      #400K
 
 
 #Output
-diag_style      ald/ta2o5 stats yes list events QCM O Ta VAC TaX TaX4O TaX5O TaX4 OTa OTaX
+diag_style      ald/ta2o5 stats yes list events QCM O Ta VAC TaX TaX4O TaX5O TaX4 OTa OTaX v1 v2 v3
 stats           .0005
 dump            1 text .001 dump.ald  id i1 i2 x y z
 

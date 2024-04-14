@@ -422,7 +422,7 @@ double AppAldTa2o5::site_propensity(int i)
   for (int jj = 0; jj < numneigh[i]; jj++) {
     j = neighbor[i][jj];
       for (m =0; m < nthree; m++) { 
-	if (element[i] == vinput[m][0] && element[j] == vinput[m][1] && (coord[i] == vcoord[m] || vcoord[m] == 0) && (dpresson[m] == pressureOn || dpresson[m] == 0)) {
+	if (element[i] == vinput[m][0] && element[j] == vinput[m][1] && (coord[i] == vcoord[m] ) && (vpresson[m] == pressureOn || vpresson[m] == 0)) {
 	add_event(i,3,m,vpropensity[m],j,-1);
 	proball += vpropensity[m];
       }
