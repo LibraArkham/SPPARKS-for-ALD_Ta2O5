@@ -724,7 +724,7 @@ void AppAldTa2o5::update_coord(int elcoord, int i, int j, int k, int which)
   //type3
   
     
-  if ((elcoord == VACANCY) && (element[i] == TaX4) && ( element[j] == O)) {
+    else if ((elcoord == VACANCY) && (element[i] == TaX4) && ( element[j] == O)) {
      // TaX4 densification
         if (element[i] == TaX4){
         	remove_mask(i, j); // Remove mask from previous O site
@@ -733,26 +733,26 @@ void AppAldTa2o5::update_coord(int elcoord, int i, int j, int k, int which)
         if (element[i] == TaX4){
             put_mask(i); // Put mask on new Zn site
         }}
-  else if ((elcoord == OTa) && (element[i] == Ta) && (element[j] == O) && ( k == -1))
+    else if ((elcoord == OTa) && (element[i] == Ta) && (element[j] == O) && ( k == -1))
   {//oxygen densification
     count_coord(i,j);
     count_coordO(j);
   }
 
-  else if ((elcoord == TaX4) && (element[i] == VACANCY) && (element[j] == TaX4O))
+    else if ((elcoord == TaX4) && (element[i] == VACANCY) && (element[j] == TaX4O))
   {//TaX4 Reverse densification
     remove_mask(i, j);
 		count_coord(i, j);
 		put_mask(j);
   }
   
-  else if ((elcoord == O) && (element[i] == VACANCY) && (element[j] == OTa))
+    else if ((elcoord == O) && (element[i] == VACANCY) && (element[j] == OTa))
   {//oxygen Reverse densification
 		count_coord(i,j);
 		coord[j]++;
   }
 
-  else if (elcoord ==TaX5O && element[i] == TaX4O && element[j] == TaX) 
+    else if (elcoord ==TaX5O && element[i] == TaX4O && element[j] == TaX) 
   {//TaX5 Dissociation
   remove_mask(i);
   put_mask(i);
