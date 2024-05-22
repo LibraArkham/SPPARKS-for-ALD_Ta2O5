@@ -1,4 +1,5 @@
 #include "app_ald.h"
+#include "app_ald_HfO2.h"
 #include "app_ald_ta2o5.h"
 #include "app_ald_zno.h"
 #include "app_am_ellipsoid.h"

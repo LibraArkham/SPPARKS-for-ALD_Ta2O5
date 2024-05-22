@@ -11,14 +11,6 @@
    See the README file in the top-level SPPARKS directory.
 ------------------------------------------------------------------------- */
 
-/* ----------------------------------------------------------------------
-   ALD application of HfO2 was developed by 
-   mahdi shirazi: m.shirazi@tue.nl, TU/e department of applied physics,
-   Simon D. Elliott: simon.elliott@schrodinger.com, Schrodinger Materials Science.
-   This application is a part of SPPARKS and authors retian the above term.
-   See the manual-app-ald and examples folders for more information.
-------------------------------------------------------------------------- */
-
 #include "math.h"
 #include "mpi.h"
 #include "stdlib.h"
@@ -33,8 +25,8 @@ using namespace SPPARKS_NS;
 
 enum{VACANCY,O,//2
 TaX5O,//3 TaX5 adsorption
-TaX4O,TaX4,TaX,Ta,//7 TaX5 surface species
-OTaX,OTa};//9 oxygen pulse 
+TaX4O,TaO,TaX,Ta,//7 TaX5 surface species
+OTa,OH,TaX5OH,TaX3O,O3Ta};//8 oxygen pulse 
 
 
 #define DELTAEVENT 100000
@@ -136,24 +128,30 @@ void AppAldTa2o5::input_app(char *command, int narg, char **arg)
       if (strcmp(arg[1],"O") == 0) sinput[none] = O;
       else if (strcmp(arg[1],"Ta") == 0) sinput[none] = Ta; 
       else if (strcmp(arg[1],"TaX4O") == 0) sinput[none] = TaX4O; 
-      else if (strcmp(arg[1],"TaX4") == 0) sinput[none] = TaX4; 
       else if (strcmp(arg[1],"TaX5O") == 0) sinput[none] = TaX5O; 
       else if (strcmp(arg[1],"TaX") == 0) sinput[none] = TaX; 
-      else if (strcmp(arg[1],"OTaX") == 0) sinput[none] = OTaX; 
+      else if (strcmp(arg[1],"TaO") == 0) sinput[none] = TaO; 
       else if (strcmp(arg[1],"OTa") == 0) sinput[none] = OTa; 
       else if (strcmp(arg[1],"VAC") == 0) sinput[none] = VACANCY; 
+      else if (strcmp(arg[1],"TaX5OH") == 0) sinput[none] = TaX5OH; 
+      else if (strcmp(arg[1],"OH") == 0) sinput[none] = OH; 
+      else if (strcmp(arg[1],"TaX3O") == 0) sinput[none] = TaX3O; 
+      else if (strcmp(arg[1],"O3Ta") == 0) sinput[none] = O3Ta; 
+
       
       else error->all(FLERR,"Illegal event arg1 command");
 
-      if (strcmp(arg[2],"OTaX") == 0) soutput[none] = OTaX;
+      if (strcmp(arg[2],"TaO") == 0) soutput[none] = TaO;
       else if (strcmp(arg[2],"OTa") == 0) soutput[none] = OTa; 
       else if (strcmp(arg[2],"TaX5O") == 0) soutput[none] = TaX5O; 
       else if (strcmp(arg[2],"Ta") == 0) soutput[none] = Ta; 
       else if (strcmp(arg[2],"TaX") == 0) soutput[none] = TaX; 
       else if (strcmp(arg[2],"TaX4O") == 0) soutput[none] = TaX4O; 
-      else if (strcmp(arg[2],"TaX4") == 0) soutput[none] = TaX4; 
       else if (strcmp(arg[2],"O") == 0) soutput[none] = O; 
       else if (strcmp(arg[2],"VAC") == 0) soutput[none] = VACANCY; 
+      else if (strcmp(arg[2],"OH") == 0) soutput[none] = OH; 
+      else if (strcmp(arg[2],"TaX5OH") == 0) soutput[none] = TaX5OH; 
+      else if (strcmp(arg[2],"O3Ta") == 0) soutput[none] = O3Ta; 
 
       
       else error->all(FLERR,"Illegal event command");
@@ -180,19 +178,21 @@ void AppAldTa2o5::input_app(char *command, int narg, char **arg)
       
       if (strcmp(arg[2],"O") == 0) doutput[ntwo][0] = O;
       else if (strcmp(arg[2],"TaX4O") == 0) doutput[ntwo][0] = TaX4O;
-    
+      else if (strcmp(arg[2],"TaX3O") == 0) doutput[ntwo][0] = TaX3O;
+
 	
       else error->all(FLERR,"Illegal event command2");
 
       if (strcmp(arg[3],"Ta") == 0) dinput[ntwo][1] = Ta;
       else if (strcmp(arg[3],"VAC") == 0) dinput[ntwo][1] = VACANCY;
-    
+      else if (strcmp(arg[3],"OH") == 0) dinput[ntwo][1] = OH;
+
 	
       else error->all(FLERR,"Illegal event command2");
 
       if (strcmp(arg[4],"TaX") == 0) doutput[ntwo][1] = TaX;
-      else if (strcmp(arg[4],"TaX4") == 0) doutput[ntwo][1] = TaX4;
-	
+	    else if (strcmp(arg[4],"O") == 0) doutput[ntwo][1] = O;
+
       else error->all(FLERR,"Illegal event command2");
 
       dA[ntwo] = atof(arg[5]);
@@ -209,12 +209,12 @@ void AppAldTa2o5::input_app(char *command, int narg, char **arg)
       if (strcmp(arg[1],"OTa") == 0) vinput[nthree][0] = OTa;
       else if (strcmp(arg[1],"TaX5O") == 0) vinput[nthree][0] = TaX5O;
       else if (strcmp(arg[1],"TaX4O") == 0) vinput[nthree][0] = TaX4O;
-      else if (strcmp(arg[1],"TaX4") == 0) vinput[nthree][0] = TaX4;
       else if (strcmp(arg[1],"TaX") == 0) vinput[nthree][0] = TaX;
       else if (strcmp(arg[1],"Ta") == 0) vinput[nthree][0] = Ta;
       else if (strcmp(arg[1],"VAC") == 0) vinput[nthree][0] = VACANCY;
-      else if (strcmp(arg[1],"OTaX") == 0) vinput[nthree][0] = OTaX;
+      else if (strcmp(arg[1],"TaO") == 0) vinput[nthree][0] = TaO;
       else if (strcmp(arg[1],"O") == 0) vinput[nthree][0] = O;
+      else if (strcmp(arg[1],"O3Ta") == 0) vinput[nthree][0] = O3Ta;
 
   
       else error->all(FLERR,"Illegal event command32");
@@ -222,38 +222,40 @@ void AppAldTa2o5::input_app(char *command, int narg, char **arg)
       if (strcmp(arg[2],"Ta") == 0) voutput[nthree][0] = Ta;
       else if (strcmp(arg[2],"VAC") == 0) voutput[nthree][0] = VACANCY;
       else if (strcmp(arg[2],"OTa") == 0) voutput[nthree][0] = OTa;
-      else if (strcmp(arg[2],"OTaX") == 0) voutput[nthree][0] = OTaX;
+      else if (strcmp(arg[2],"TaO") == 0) voutput[nthree][0] = TaO;
       else if (strcmp(arg[2],"TaX") == 0) voutput[nthree][0] = TaX;
-      else if (strcmp(arg[2],"TaX4") == 0) voutput[nthree][0] = TaX4;
       else if (strcmp(arg[2],"TaX4O") == 0) voutput[nthree][0] = TaX4O;
       else if (strcmp(arg[2],"TaX5O") == 0) voutput[nthree][0] = TaX5O;
       else if (strcmp(arg[2],"O") == 0) voutput[nthree][0] = O;
- 
+      else if (strcmp(arg[2],"TaX3O") == 0) voutput[nthree][0] = TaX3O;
+      else if (strcmp(arg[2],"O3Ta") == 0) voutput[nthree][0] = O3Ta;
+
       else error->all(FLERR,"Illegal event command33");
       
       if (strcmp(arg[3],"O") == 0) vinput[nthree][1] = O;
       else if (strcmp(arg[3],"Ta") == 0) vinput[nthree][1] = Ta;
       else if (strcmp(arg[3],"TaX4O") == 0) vinput[nthree][1] = TaX4O;
       else if (strcmp(arg[3],"TaX5O") == 0) vinput[nthree][1] = TaX5O;
-      else if (strcmp(arg[3],"TaX4") == 0) vinput[nthree][1] = TaX4;
       else if (strcmp(arg[3],"TaX") == 0) vinput[nthree][1] = TaX;
       else if (strcmp(arg[3],"OTa") == 0) vinput[nthree][1] = OTa;
-      else if (strcmp(arg[3],"OTaX") == 0) vinput[nthree][1] = OTaX;
+      else if (strcmp(arg[3],"TaO") == 0) vinput[nthree][1] = TaO;
       else if (strcmp(arg[3],"VAC") == 0) vinput[nthree][1] = VACANCY;
+      else if (strcmp(arg[3],"OH") == 0) vinput[nthree][1] = OH;
+      else if (strcmp(arg[3],"O3Ta") == 0) vinput[nthree][1] = O3Ta;
 
    
       else error->all(FLERR,"Illegal event command34");
 
       if (strcmp(arg[4],"O") == 0) voutput[nthree][1] = O;
       else if (strcmp(arg[4],"TaX") == 0) voutput[nthree][1] = TaX;
-      else if (strcmp(arg[4],"TaX4") == 0) voutput[nthree][1] = TaX4;
       else if (strcmp(arg[4],"TaX4O") == 0) voutput[nthree][1] = TaX4O;
       else if (strcmp(arg[4],"TaX5O") == 0) voutput[nthree][1] = TaX5O;
       else if (strcmp(arg[4],"OTa") == 0) voutput[nthree][1] = OTa;
-      else if (strcmp(arg[4],"OTaX") == 0) voutput[nthree][1] = OTaX;
+      else if (strcmp(arg[4],"TaO") == 0) voutput[nthree][1] = TaO;
       else if (strcmp(arg[4],"Ta") == 0) voutput[nthree][1] = Ta;
       else if (strcmp(arg[4],"VAC") == 0) voutput[nthree][1] = VACANCY;
-  
+      else if (strcmp(arg[4],"O3Ta") == 0) voutput[nthree][1] = O3Ta;
+
       else error->all(FLERR,"Illegal event command35");
 
       vA[nthree] = atof(arg[5]);
@@ -369,24 +371,31 @@ double AppAldTa2o5::site_propensity(int i)
   int j,k,m;
 
 
-  clear_events(i);
-
+   clear_events(i);
+  // std::cout<<"clear_events"<<std::endl;
   double proball = 0.0;
 
 
   //type I, check species of sites and consider possible events
 
-  // count_coordO was added here to prevent adsorption of metal precursor 
+  // count_coordO was added here to prevent adsorption of metal precursor
   // on the low coordinate oxygen at sublayer
 
   for (m = 0; m < none; m++) {
     if (element[i] != sinput[m]) continue;
-    if ((coord[i] == scoord[m] || scoord[m] == 0) && (spresson[m] == pressureOn || spresson[m] == 0)) {
-	    add_event(i,1,m,spropensity[m],-1,-1);
+    int coordi = coord[i] < 0 ? (coord[i] % 10 + 10) : (coord[i] % 10);
+    if ((coord[i] == scoord[m] || scoord[m] == -1) && (spresson[m] == pressureOn || spresson[m] == 0) && (coordi < numneigh[i])) {
+      // std::cout<<"coord[i]"<<coord[i]<<std::endl;
+      // std::cout<<"numneigh[i]"<<numneigh[i]<<std::endl;
+	    add_event(i,1,m,spropensity[m],-1,-1,-1);
 	    proball += spropensity[m];
     }
+    //else if ((element[i]=TaX4O) && (spresson[m] == pressureOn || spresson[m] == 0) && (coordi <= numneigh[i])) {
+    //  add_event(i,1,m,spropensity[m],-1,-1,-1);
+	  //  proball += spropensity[m];
+    //  }
   }
-
+  // std::cout<<"test1"<<std::endl;
   // type II, check species of sites and second neighbor 
   // comneigh variable used to avoid double counting,
   // we consider more than one event between sites, therefore we need 2d comneigh array.
@@ -398,16 +407,18 @@ double AppAldTa2o5::site_propensity(int i)
             k = neighbor[j][kk];
             if (i == k) continue;
             for (m = 0; m < ntwo; m++) {
-	    if ((element[i] == dinput [m][0] && element[k] == dinput [m][1]) && (dpresson[m] == pressureOn || dpresson[m] == 0) && (coord[i] == dcoord[m] || dcoord[m] == 0)) {
+              int coordi = coord[i] < 0 ? (coord[i] % 10 + 10) : (coord[i] % 10);
+              int coordk = coord[k] < 0 ? (coord[k] % 10 + 10) : (coord[k] % 10);
+	    if ((element[i] == dinput[m][0] && element[k] == dinput[m][1]) && (dpresson[m] == pressureOn || dpresson[m] == 0) && (coord[i] == dcoord[m] || dcoord[m] == -1) ) {
   	      comevent = 1;
   	      for (int ii = 0; ii < nextneib; ii++) {
   	      if ( comneigh[ii][0] == k && comneigh[ii][1] == dpropensity[m]) comevent = 0;
   	      }
   	      if (comevent){	
-                add_event(i,2,m,dpropensity[m],-1,k);
+                add_event(i,2,m,dpropensity[m],-1,k,-1);
                 proball += dpropensity[m];
   	        comneigh[nextneib][0] = k;
-                  comneigh[nextneib][1] = dpropensity[m];
+                comneigh[nextneib][1] = dpropensity[m];
   	        nextneib++;
   	    } 
           }
@@ -415,21 +426,44 @@ double AppAldTa2o5::site_propensity(int i)
       }
     }
     for (m = 0; m < nextneib; m++) comneigh[m][0] = comneigh[m][1] = 0;
-
+    // std::cout<<"test2"<<std::endl;
   //type III, check species of sites and first neighbour 
-
-
   for (int jj = 0; jj < numneigh[i]; jj++) {
     j = neighbor[i][jj];
-      for (m =0; m < nthree; m++) { 
-	if (element[i] == vinput[m][0] && element[j] == vinput[m][1] && (coord[i] == vcoord[m] ) && (vpresson[m] == pressureOn || vpresson[m] == 0)) {
-	add_event(i,3,m,vpropensity[m],j,-1);
-	proball += vpropensity[m];
+      for (m =0; m < nthree; m++) {
+      // std::cout<<"test3!!!"<<std::endl;
+      int coordi = coord[i] < 0 ? (coord[i] % 10 + 10) : (coord[i] % 10);
+      int coordj = coord[j] < 0 ? (coord[j] % 10 + 10) : (coord[j] % 10);
+      if (element[i] == vinput[m][0] && element[j] == vinput[m][1] && (coord[i] == vcoord[m] || vcoord[m] == -1 ) && (vpresson[m] == pressureOn || vpresson[m] == 0) && (coordi < numneigh[i]) && (coordj < numneigh[j])) {
+        // std::cout<<"coord[j]:"<<coord[j]<<std::endl;
+        // std::cout<<"numneigh[j]:"<<numneigh[j]<<std::endl;
+        add_event(i,3,m,vpropensity[m],j,-1,-1);
+        proball += vpropensity[m];
       }
     }
   }
-
-
+  // type IIII, check species of sites and third neighbor 
+  for (int jj = 0; jj < numneigh[i]; jj++) {
+    j = neighbor[i][jj];
+      for (int kk = 0; kk < numneigh[j]; kk++) {
+        k = neighbor[j][kk];
+          for (int gg = 0; gg < numneigh[k]; gg++) {
+            int g = neighbor[k][gg];
+            for (m = 0; m < nfour; m++) {
+              int coordi = coord[i] < 0 ? (coord[i] % 10 + 10) : (coord[i] % 10);
+              int coordg = coord[j] < 0 ? (coord[g] % 10 + 10) : (coord[g] % 10);
+              if (element[i] == finput[m][0] && element[g] == finput[m][1] && (coord[i] == fcoord[m] || fcoord[m] == -1 ) && (fpresson[m] == pressureOn || fpresson[m] == 0) && (coordi<=numneigh[i]) && (coordg<numneigh[g])) {
+                add_event(i,4,m,fpropensity[m],-1,-1,g);
+                proball += fpropensity[m];
+              }
+            }
+        }
+    }
+  }
+  // vacant event:5
+  add_event(i,5,-1,0.1,-1,-1,-1);
+  proball += 0.1;
+  // std::cout<<"test3"<<std::endl;
   return proball;
 }
 
@@ -440,8 +474,8 @@ double AppAldTa2o5::site_propensity(int i)
 
 void AppAldTa2o5::site_event(int i, class RandomPark *random)
 {
-  int j,k,m,n,mm,jj;
-  int elcoord = element[i];
+  int j,k,g,m,n,mm,jj;
+  //int elcoord = element[i];
   
   double threshhold = random->uniform() * propensity[i2site[i]];
   double proball = 0.0;
@@ -457,6 +491,12 @@ void AppAldTa2o5::site_event(int i, class RandomPark *random)
   int which = events[ievent].which;
   j = events[ievent].jpartner;
   k = events[ievent].kpartner;
+  g = events[ievent].gpartner;
+  int elcoord_i = element[i];
+  int elcoord_j = element[j];
+  int elcoord_k = element[k];
+  int elcoord_g = element[g];
+
 
 
   if (rstyle == 1) {
@@ -473,9 +513,16 @@ void AppAldTa2o5::site_event(int i, class RandomPark *random)
     element[j] = voutput[which][1];
     vcount[which]++;
     }
+  else if (rstyle == 4) {
+    element[i] = foutput[which][0];
+    element[g] = foutput[which][1];
+    fcount[which]++;
+  }
+  
+  else if (rstyle == 5) {}
   else { error->all(FLERR,"Illegal execution event"); }
 
-  update_coord(elcoord,i,j,k,which);
+  //update_coord(elcoord,i,j,k,which);
 
   // sequence of ALD, 
   // 1 is metal pulse, 3 purge, 2 oxygen pulse.
@@ -489,77 +536,83 @@ void AppAldTa2o5::site_event(int i, class RandomPark *random)
 
   int nsites = 0;
   int isite = i2site[i];
-  
- 
 
+
+// mask 
+   if (rstyle == 1) {
+    if (elcoord_i == Ta && element[i] == OTa) {
+     put_mask_2(i);
+    }
+    else if (elcoord_i == OTa && element[i] == Ta) {
+      remove_mask_2(i);
+    }
+   else if ((elcoord_i == O || elcoord_i == OH) && (element[i] == TaX5O || element[i] == TaX5OH)) {
+     //std::cout<<"mask!!!"<<std::endl;
+    put_mask(i);
+    }
+    else if ((elcoord_i == TaX5O || elcoord_i == TaX5OH) && (element[i] == O || element[i] == OH)) {
+      remove_mask(i);
+    }
+    else if ((elcoord_i == TaX4O || elcoord_i == TaX3O) && element[i] == TaO) {
+      remove_mask(i);
+    }
+  }
+  else if (rstyle == 3) {
+    if (elcoord_i == OTa && element[i] == Ta) {
+      remove_mask_2(i);
+    }
+  }
+ 
+  count_coord(i);
   propensity[isite] = site_propensity(i);
   esites[nsites++] = isite;
   echeck[isite] = 1;
-
-  // go from site i to first and second neighbor in all type
-  
-  for (n = 0; n < numneigh[i]; n++) {
+for (int n = 0; n < numneigh[i]; n++) {
     m = neighbor[i][n];
     isite = i2site[m];
     if (isite >= 0 && echeck[isite] == 0) {
-      propensity[isite] = site_propensity(m);
-      esites[nsites++] = isite;
-      echeck[isite] = 1;
+    count_coord(m);
+    propensity[isite] = site_propensity(m);
+    esites[nsites++] = isite;
+    // std::cout<<"nsites:"<<nsites<<std::endl;
+    echeck[isite] = 1;
     }
-      for (jj = 0; jj< numneigh[m];jj++) {
-        mm = neighbor[m][jj];
-        isite = i2site[mm];
+    for (int jj = 0; jj< numneigh[m];jj++) {
+    mm = neighbor[m][jj];
+    isite = i2site[mm];
         if (isite >= 0 && echeck[isite] == 0) {
-          propensity[isite] = site_propensity(mm);
-          esites[nsites++] = isite;
-          echeck[isite] = 1;
+            count_coord(mm);
+            propensity[isite] = site_propensity(mm);
+            esites[nsites++] = isite;
+            // std::cout<<"nsites:"<<nsites<<std::endl;
+            echeck[isite] = 1;
         }
-     }
+        for (int ss = 0; ss< numneigh[mm]; ss++) {
+            int s = neighbor[mm][ss];
+            isite = i2site[s];
+            if (isite >= 0 && echeck[isite] == 0) {
+              count_coord(s);
+              propensity[isite] = site_propensity(s);
+              esites[nsites++] = isite;
+              // std::cout<<"nsites:"<<nsites<<std::endl;
+              echeck[isite] = 1;
+            }
+            for (int gg = 0; gg< numneigh[s]; gg++) {
+              int g = neighbor[s][gg];
+              isite = i2site[g];
+              if (isite >= 0 && echeck[isite] == 0) {
+                count_coord(g);
+                propensity[isite] = site_propensity(g);
+                esites[nsites++] = isite;
+                // std::cout<<"nsites:"<<nsites<<std::endl;
+                echeck[isite] = 1;
+              }
+            }
+        }
+    }
   }
 
-  // go from site k to first and second neighbor in type II 
-  if (rstyle == 2) {
-    for (n = 0; n < numneigh[k]; n++) {
-      m = neighbor[k][n];
-      isite = i2site[m];
-      if (isite >= 0 && echeck[isite] == 0) {
-        propensity[isite] = site_propensity(m);
-        esites[nsites++] = isite; 
-        echeck[isite] = 1;
-      }
-      for (jj = 0; jj< numneigh[m];jj++) {
-        mm = neighbor[m][jj];
-        isite = i2site[mm];
-        if (isite >= 0 && echeck[isite] == 0) {
-          propensity[isite] = site_propensity(mm);
-          esites[nsites++] = isite; 
-          echeck[isite] = 1;
-        }
-      }
-    }
-  }
 
-  // go from site j to first and second neighbor in type III 
-  if (rstyle == 3) {
-    for (n = 0; n < numneigh[j]; n++) {
-      m = neighbor[j][n];
-      isite = i2site[m];
-      if (isite >= 0 && echeck[isite] == 0) {
-        propensity[isite] = site_propensity(m);
-        esites[nsites++] = isite;
-        echeck[isite] = 1;
-      }
-      for (jj = 0; jj< numneigh[m];jj++) {
-        mm = neighbor[m][jj];
-        isite = i2site[mm];
-        if (isite >= 0 && echeck[isite] == 0) {
-          propensity[isite] = site_propensity(mm);
-          esites[nsites++] = isite;
-          echeck[isite] = 1;
-        }
-       }
-    }
-  }
 
   solve->update(nsites,esites,propensity);
    // clear echeck array
@@ -593,7 +646,7 @@ void AppAldTa2o5::clear_events(int i)
 ------------------------------------------------------------------------- */
 
 void AppAldTa2o5::add_event(int i, int rstyle, int which, double propensity,
-			  int jpartner, int kpartner)
+			  int jpartner, int kpartner, int gpartner)
 {
   if (nevents == maxevent) {
     maxevent += DELTAEVENT;
@@ -609,6 +662,7 @@ void AppAldTa2o5::add_event(int i, int rstyle, int which, double propensity,
   events[freeevent].which = which;
   events[freeevent].jpartner = jpartner;
   events[freeevent].kpartner = kpartner;
+  events[freeevent].gpartner = gpartner;
   events[freeevent].propensity = propensity;
 
   if ( propensity == 0 ) error->all(FLERR,"propensity in add_event wrong app ald");
@@ -683,39 +737,62 @@ void AppAldTa2o5::grow_reactions(int rstyle)
     vpresson = (int *)
       memory->srealloc(vpresson,n*sizeof(int),"app/ald:vpresson");
   }
+  else if (rstyle == 4) {
+    int n = nfour + 1;
+    frate = (double *)
+      memory->srealloc(frate,n*sizeof(double),"app/ald/hfo2:frate");
+    fpropensity = (double *)
+      memory->srealloc(fpropensity,n*sizeof(double),"app/ald/hfo2:fpropensity");
+    finput = memory->grow(finput,n,2,"app/ald/hfo2:finput");
+    foutput = memory->grow(foutput,n,2,"app/ald/hfo2:foutput");
+    fcount = (int *)
+      memory->srealloc(fcount,n*sizeof(int),"app/ald/hfo2:fcount");
+    fA = (double *)
+      memory->srealloc(fA,n*sizeof(double),"app/ald/hfo2:fA");
+    fexpon = (int *)
+      memory->srealloc(fexpon,n*sizeof(int),"app/ald/hfo2:fexpon");
+    fcoord = (int *)
+      memory->srealloc(fcoord,n*sizeof(int),"app/ald/hfo2:fcoord");
+    fpresson = (int *)
+      memory->srealloc(fpresson,n*sizeof(int),"app/ald/hfo2:fpresson");
+  }
 }
 
 /* ----------------------------------------------------------------------
    update c.n. for Hf and O, put and remove mask for relative sites
 ------------------------------------------------------------------------- */
-void AppAldTa2o5::update_coord(int elcoord, int i, int j, int k, int which)
-{ 
+//void AppAldTa2o5::update_coord(int elcoord, int i, int j, int k, int which)
+//{ 
   //type1
   
-    if ((elcoord == O  && element[i] == TaX5O) && (j == -1)) 
-    {//Adsorption of TaX5
-      coord[i]++;
-      put_mask(i);
-    }
-    else if ((elcoord == TaX5O && element[i] == O ) && (j == -1))
-    {//Desorption of TaX5
-      coord[i]--;
-      remove_mask(i);
-      count_coordO(i);
-    }
-    else if ((elcoord == Ta  && element[i] == OTa ) && (j == -1))
-    {//Adsorption of oxygen
-      coord[i]++;
-    }
-    else if ((elcoord == OTa && element[i] == Ta ) && (j == -1))
-    {//Desorption of oxygen
-      coord[i]--;
-    }
-    else if ((elcoord == TaX  && element[i] == OTaX ) && (j == -1))
-    {//Oxidation
-      coord[i]++;
-    }
-  
+//    if ((elcoord == O  && element[i] == TaX5O) && (j == -1)) 
+//    {//Adsorption of TaX5
+//      coord[i]++;
+//      //put_mask(i);
+//    }
+//    else if ((elcoord == TaX5O && element[i] == O ) && (j == -1))
+//    {//Desorption of TaX5
+//      coord[i]--;
+//      //remove_mask(i);
+//      count_coordO(i);
+//    }
+//    else if ((elcoord == Ta  && element[i] == OTa ) && (j == -1))
+//    {//Adsorption of oxygen
+//      coord[i]++;
+//    }
+//    else if ((elcoord == OTa && element[i] == Ta ) && (j == -1))
+//    {//Desorption of oxygen
+//      coord[i]--;
+//    }
+//    else if ((elcoord == TaX  && element[i] == Ta ) && (j == -1))
+//    {//Oxidation
+//      coord[i]++;
+//    }
+//    
+//    else if ((elcoord == TaX4O  && element[i] == TaO ) && (j == -1))
+//    {//Oxidation
+//      coord[i]++;
+//   }
   //type2
   /*else if (j!=-1 && k==-1) {
     count_coord(i);
@@ -724,118 +801,63 @@ void AppAldTa2o5::update_coord(int elcoord, int i, int j, int k, int which)
   //type3
   
     
-    else if ((elcoord == VACANCY) && (element[i] == TaX4) && ( element[j] == O)) {
-     // TaX4 densification
-        if (element[i] == TaX4){
-        	remove_mask(i, j); // Remove mask from previous O site
-        }
-        count_coord(j, i);
-        if (element[i] == TaX4){
-            put_mask(i); // Put mask on new Zn site
-        }}
-    else if ((elcoord == OTa) && (element[i] == Ta) && (element[j] == O) && ( k == -1))
-  {//oxygen densification
-    count_coord(i,j);
-    count_coordO(j);
-  }
+//    else if ((elcoord == VACANCY) && (element[i] == TaO) && ( element[j] == O)) {
+//     //densification
+//        if (element[i] == TaO){
+//       	//remove_mask(i, j); // Remove mask from previous O site
+//      }
+//        count_coord(j, i);
+//        if (element[i] == TaO){
+//            //put_mask(i); // Put mask on new Zn site
+//        }}
+//    else if ((elcoord == OTa) && (element[i] == Ta) && (element[j] == O) && ( k == -1))
+//  {//oxygen densification
+//    count_coord(i,j);
+//    count_coordO(j);
+//  }
 
-    else if ((elcoord == TaX4) && (element[i] == VACANCY) && (element[j] == TaX4O))
-  {//TaX4 Reverse densification
-    remove_mask(i, j);
-		count_coord(i, j);
-		put_mask(j);
-  }
+//    else if ((elcoord == Ta) && (element[i] == VACANCY) && (element[j] == TaO))
+//  {//TaX4 Reverse densification
+    //remove_mask(i, j);
+//		count_coord(i, j);
+		//put_mask(j);
+//  }
   
-    else if ((elcoord == O) && (element[i] == VACANCY) && (element[j] == OTa))
-  {//oxygen Reverse densification
-		count_coord(i,j);
-		coord[j]++;
-  }
+//    else if ((elcoord == O) && (element[i] == VACANCY) && (element[j] == OTa))
+//  {//oxygen Reverse densification
+//		count_coord(i,j);
+//		coord[j]++;
+//  }
 
-    else if (elcoord ==TaX5O && element[i] == TaX4O && element[j] == TaX) 
-  {//TaX5 Dissociation
-  remove_mask(i);
-  put_mask(i);
-  coord[j]++;
-  put_mask(j);
-  }
+//    else if ((elcoord ==TaX5O) && (element[i] == TaX4O) && (element[j] == TaX)) 
+//  {//TaX5 Dissociation
+  //remove_mask(i);
+  //put_mask(i);
+//  coord[j]++;
+  //put_mask(j);
+//  }
   
-}
+//}
 
 /* ----------------------------------------------------------------------
    count c.n after densification
 ------------------------------------------------------------------------- */
-void AppAldTa2o5::count_coord(int i, int j) // i: Oxygen species, j: Ta species (does not necessarily hold)
+void AppAldTa2o5::count_coord(int i) // i: Oxygen species(does not necessarily hold)
 {
-// Densification of TaX4O -> TaX4
-    if (( element[i] == O) &&  ( element[j] == TaX4 )  ){
-			coord[j]=coord[j]+1; // Add one because of X ligand
-			for (int s = 0; s < numneigh[j]; s++){
-				int nn = neighbor[j][s];
-				if (element[nn] >= O && element[nn] <= TaX4O ) { // Check if neighbouring site is an oxygen site
-					coord[j]=coord[j] + 1;
-					if (i != nn){ coord[nn]=coord[nn]+1; } // Careful not to change the cn of original site
-				}
-			}
-    }
-// Densification of TaO -> Ta
-    else if (( element[i] == O) &&  ( element[j] == Ta )  ){
-        for (int s = 0; s < numneigh[j]; s++){
-                int nn = neighbor[j][s];
-                if (element[nn] >= O && element[nn] <= TaX4O ) { // Check if neighbouring site is an oxygen site
-                        coord[j]=coord[j] + 1;
-                        if (i != nn){ coord[nn]=coord[nn]+1; }
-                }
-        }
-    }
-// Densification of oxygen-species
-    /*else if (( element[i] == O) &&  (element[j] == Ta)){
-        for (int s = 0; s < numneigh[j]; s++){
-                int nn = neighbor[j][s];
-                if ( Ta <= element[nn] && element[nn] <= OTa) { // Check if neighbouring site is an Ta site
-                        coord[j]=coord[j] + 1;
-                        if (i != nn){ coord[nn]=coord[nn]+1; 
-//                            if(element[nn] == Zn and coord[nn] > 4){printf("i: %d %d %d j: %d %d %d nn: %d %d %d\n", i, element[i], coord[i], j, element[j], coord[j], nn, element[nn], coord[nn]);}
-                        }
-                }
-        }
-    }*/
-// Reverse densification on TaX4
-    else if ( element[i] == VACANCY  && (element[j] = TaX4O) ){
-        if ( element[j] == TaX4O){ coord[i]=coord[i] - 1; } // Remove the extra cn from ligand
-        for (int s = 0; s < numneigh[i]; s++){
-            int nn = neighbor[i][s];
-            if ( element[nn] >= O && element[nn] <= TaX4 ) { // Check if neighbouring site is an oxygen site
-                coord[i]=coord[i] - 1;
-                if (j != nn){ coord[nn]=coord[nn] - 1;
-                }
-            }
-        }
-    }
-// Desorption of Oxygen, event 1 and 3
-   /*else if ( element[i] == VACANCY  && ( j == -1 || element[j] == ZnX ) ){
-        for (int s = 0; s < numneigh[i]; s++){
-            int nn = neighbor[i][s];
-            if ( element[nn] >= Zn && element[nn] <= OZn ) { // Check if neighbouring site is a zinc site
-                coord[i]=coord[i] - 1;
-                if (i != nn){ coord[nn]=coord[nn] - 1;}
-            }
-        }
-    }*/
-// Reverse densification of OTa
-    else if ( element[i] == VACANCY  && (element[j] == OTa) ){
-        for (int s = 0; s < numneigh[i]; s++){
-            int nn = neighbor[i][s];
-            if ( element[nn] >= Ta && element[nn] <= OTa ) { // Check if neighbouring site is a zinc site
-                coord[i]=coord[i] - 1;
-                if (i != nn){ coord[nn]=coord[nn] - 1;}
-            }
-        }
-    }
+ if (0 <= coord[i]) coord[i] = 0;
+  else if (-10 < coord[i] && coord[i] < 0) coord[i] = -10;
+  else if (-20 < coord[i] && coord[i] < -10) coord[i] = -20;
+  else if (-30 < coord[i] && coord[i] < -20) coord[i] = -30;
+  else if (-40 < coord[i] && coord[i] < -30) coord[i] = -40;
+  else if (-50 < coord[i] && coord[i] < -40) coord[i] = -50;
 
+  for (int s = 0; s < numneigh[i]; s++) {
+    int nn = neighbor[i][s];
+    if (element[nn] != VACANCY) coord[i]++;
+}
 }
 
-/* ----------------------------------------------------------------------
+/* ---------------------------------------------------- ------------------
    count c.n of oxygen before adsorption
 ------------------------------------------------------------------------- */
 void AppAldTa2o5::count_coordO(int i)
@@ -870,303 +892,103 @@ void AppAldTa2o5::count_coordO(int i)
 /* ----------------------------------------------------------------------
    put mask for affected sites
 ------------------------------------------------------------------------- */
-void AppAldTa2o5::put_mask(int i)
-{
-    int isite = i2site[i];
-	int nsites = 0;
-	esites[nsites++] = isite;
-    echeck[isite] = 1;
-// Add mask on the second neighbor (oxygen) of the DEZ to block adsorption
-	if (element[i] == TaX5O ){
-	  	for (int n = 0; n < numneigh[i]; n++) {
-			int nn = neighbor[i][n];
-			isite = i2site[nn];
-			if (isite >= 0 && echeck[isite] == 0) { // Cover first neighbour Zn site
-			    coord[isite]=coord[isite]-20;
-			    esites[nsites++] = isite;
-			    echeck[isite] = 1;
-                        }
-			for (int k = 0; k < numneigh[nn]; k++){
-				int kk = neighbor[nn][k];
-				isite = i2site[kk];
-				if (isite >= 0 && echeck[isite] == 0) { // Cover second neighbour O site
-					coord[isite]=coord[isite]-10;
-					esites[nsites++] = isite;
-					echeck[isite] = 1;
-				}
-/*				for (int m = 0; m < numneigh[kk]; m++) {
-					int mm = neighbor[kk][m];
-					isite = i2site[mm];
-					if (isite >= 0 && echeck[isite] == 0) { // Cover third neighbour Zn site
-					    coord[isite] = coord[isite]-10;
-					    esites[nsites++] = isite;
-					    echeck[isite] = 1;
-                                        }
-					for (int s = 0; s < numneigh[mm]; s++) {
-						int ss = neighbor[mm][s];
-						isite = i2site[ss];
-						if (isite >= 0 && echeck[isite] == 0) { // Cover fourth neighbour O site
-							coord[isite] = coord[isite]-10;
-							esites[nsites++] = isite;
-							echeck[isite] = 1;
-						}
-					}
-				}
-*/			}
-	    }
+void AppAldTa2o5::put_mask(int i) {
+  int nsites = 0;
+  int isite = i2site[i];
+  echeck[isite] = 1;
+  esites[nsites++] = isite;
+  for (int s = 0; s < numneigh[i]; s++) {
+    int nn = neighbor[i][s];
+    int isite = i2site[nn];
+    // std::cout<<"isite:"<<isite<<std::endl;
+    // std::cout<<"echeck:"<<echeck[isite]<<std::endl;
+    if (isite >= 0 && echeck[isite] == 0) {
+        echeck[isite] = 1;
+        esites[nsites++] = isite;
+        coord[nn] -= 10;
+        // std::cout << "put mask " << i << std::endl;
     }
-// Add mask to the second neighbor (oxygen) of the DEZ to block adsorption (TaX4 reverse densification)
-    else if ( element[i] == TaX4O){
-        for (int n = 0; n < numneigh[i]; n++) {
-            int nn = neighbor[i][n];
-            isite = i2site[nn];
-            if (isite >= 0 && echeck[isite] == 0) { // Cover first neighbour Zn site
-                coord[isite]=coord[isite]-10;
-                esites[nsites++] = isite;
-                echeck[isite] = 1;
-            }
-            for (int k = 0; k < numneigh[nn]; k++){
-                int kk = neighbor[nn][k];
-                isite = i2site[kk];
-                if (isite >= 0 && echeck[isite] == 0) { // Cover second neighbour O site
-                    coord[isite]=coord[isite]-10;
-                    esites[nsites++] = isite;
-                    echeck[isite] = 1;
-                }
-/*                for (int m = 0; m < numneigh[kk]; m++) {
-                    int mm = neighbor[kk][m];
-                    isite = i2site[mm];
-                    if (isite >= 0 && echeck[isite] == 0) { // Cover third neighbour Zn site
-                        coord[isite] = coord[isite]-10;
-                        esites[nsites++] = isite;
-                        echeck[isite] = 1;
-                    }
-                    for (int s = 0; s < numneigh[mm]; s++) {
-                        int ss = neighbor[mm][s];
-                        isite = i2site[ss];
-                        if (isite >= 0 && echeck[isite] == 0) { // Cover fourth neighbour O site
-                            coord[isite] = coord[isite]-10;
-                            esites[nsites++] = isite;
-                            echeck[isite] = 1;
-                        }
-                    }
-                }
-*/            }
-        }
-    }	
-// Add mask to the first neighbor (oxygen) to block adsorption
-	else if ( element[i] == TaX4 ){
-	  	for (int n = 0; n < numneigh[i]; n++) {
-			int nn = neighbor[i][n];
-			isite = i2site[nn];
-			if (isite >= 0 && echeck[isite] == 0) { // Cover first neighbour O site
-				coord[isite]=coord[isite]-10;
-				esites[nsites++] = isite;
-				echeck[isite] = 1;
-			}
-            for (int k = 0; k < numneigh[nn]; k++){
-                int kk = neighbor[nn][k];
-                isite = i2site[kk];
-                if (isite >= 0 && echeck[isite] == 0) { // Cover second neighbour Zn site
-                    coord[isite] = coord[isite]-10;
-                    esites[nsites++] = isite;
-                    echeck[isite] = 1;
-                }
-/*                for (int m = 0; m < numneigh[kk]; m++) {
-                    int mm = neighbor[kk][m];
-                    isite = i2site[mm];
-                    if (isite >= 0 && echeck[isite] == 0) { // Cover third neighbour Zn site
-                        coord[isite] = coord[isite]-10;
-                        esites[nsites++] = isite;
-                        echeck[isite] = 1;
-                    }
-                    for (int s = 0; s < numneigh[mm]; s++) {
-                        int ss = neighbor[mm][s];
-                        isite = i2site[ss];
-                        if (isite >= 0 && echeck[isite] == 0) { // Cover fourth neighbour O site
-                            coord[isite] = coord[isite]-10;
-                            esites[nsites++] = isite;
-                            echeck[isite] = 1;
-                        }
-                    }
-                }
-*/            }
-        }
-	}
-        for (int m = 0; m < nsites; m++)  {echeck[esites[m]] = 0; esites[m]=0;}
+    for (int ss = 0; ss < numneigh[nn]; ss++){
+      int nnn = neighbor[nn][ss];
+      int isite = i2site[nnn];
+      if (isite >= 0 && echeck[isite] == 0) {
+        echeck[isite] = 1;
+        esites[nsites++] = isite;
+        coord[nnn] -= 10;
+      }
+    }
+  }
+  // for (int s = 0; s < numneigh[i]; s++) {
+  //   int nn = neighbor[i][s];
+  //   coord[nn] -= 10;
+  // }
+  for (int m = 0; m < nsites; m++)  {echeck[esites[m]] = 0; esites[m]=0;}
+  // std::cout << "put mask " << i << std::endl;
 }
 
-/* ----------------------------------------------------------------------
-   remove mask 
-------------------------------------------------------------------------- */
-void AppAldTa2o5::remove_mask(int i, int j) // j flag for when Zn densification
-{
-    int isite = i2site[i];
-	int nsites = 0;
-	esites[nsites++] = isite;
-    echeck[isite] = 1;
-// Remove mask from oxygen sites after desorption
-	if ( element[i] == O || element[i] == TaX4O){
-	  	for (int n = 0; n < numneigh[i]; n++) {
-			int nn = neighbor[i][n];
-			isite = i2site[nn];
-			if (isite >= 0 && echeck[isite] == 0) { // Remove first neighbour Zn site
-                coord[isite]=coord[isite]+20;
-                esites[nsites++] = isite;
-                echeck[isite] = 1;
-            }
-			for (int k = 0; k < numneigh[nn]; k++){
-				int kk = neighbor[nn][k];
-				isite = i2site[kk];
-				if (isite >= 0 && echeck[isite] == 0) { // Remove second neighbour O site
-					coord[isite]=coord[isite]+10;
-					esites[nsites++] = isite;
-					echeck[isite] = 1;
-				}
-/*				for (int m = 0; m < numneigh[kk]; m++) {
-					int mm = neighbor[kk][m];
-					isite = i2site[mm];
-					if (isite >= 0 && echeck[isite] == 0) {// Remove third neighbour Zn site
-					    coord[isite] = coord[isite]+10;
-					    esites[nsites++] = isite;
-					    echeck[isite] = 1;
-                    }
-					for (int s = 0; s < numneigh[mm]; s++) {
-						int ss = neighbor[mm][s];
-						isite = i2site[ss];
-						if (isite >= 0 && echeck[isite] == 0) {// Remove fourth neighbour O site
-							coord[isite] = coord[isite]+10;
-							esites[nsites++] = isite;
-							echeck[isite] = 1;
-						}
-					}
-				}
-*/			}
-        }
-	}
-	
-// Remove mask from the oxygen site after densification
-	else if ( ( element[i] == TaX4 && ( element[j] == O)) ){ 
-	    echeck[i2site[i]] = 0;
-	    for (int n = 0; n < numneigh[j]; n++) {
-	        int nn = neighbor[j][n];
-	        isite = i2site[nn];
-	        if (isite >= 0 && echeck[isite] == 0 ) { // Remove first neighbour Zn site
-	            coord[isite]=coord[isite]+10;
-                esites[nsites++] = isite;
-                echeck[isite] = 1;
-            }
-            for (int k = 0; k < numneigh[nn]; k++){
-                int kk = neighbor[nn][k];
-                if(kk != j){
-                    isite = i2site[kk];
-                    if (isite >= 0 && echeck[isite] == 0) { // Remove second neighbour O site
-                        if(isite!=j){coord[isite] = coord[isite]+10;}
-                        esites[nsites++] = isite;
-                        echeck[isite] = 1;
-                    }
-                }
-/*                for (int m = 0; m < numneigh[kk]; m++) {
-					int mm = neighbor[kk][m];
-					isite = i2site[mm];
-					if (isite >= 0 && echeck[isite] == 0) { // Cover third neighbour Zn site
-						coord[isite] = coord[isite]+10;
-						esites[nsites++] = isite;
-						echeck[isite] = 1;
-					}
-					for (int s = 0; s < numneigh[mm]; s++) {
-						int ss = neighbor[mm][s];
-						isite = i2site[ss];
-						if (isite >= 0 && echeck[isite] == 0) { // Cover fourth neighbour O site
-							coord[isite] = coord[isite]+10;
-							esites[nsites++] = isite;
-							echeck[isite] = 1;
-						}
-					}
-				}
-*/            }
-        }
+void AppAldTa2o5::put_mask_2(int i)  {
+  int nsites = 0;
+  int isite = i2site[i];
+  echeck[isite] = 1;
+  esites[nsites++] = isite;
+  for (int s = 0; s < numneigh[i]; s++) {
+    int nn = neighbor[i][s];
+    int isite = i2site[nn];
+    // std::cout<<"isite:"<<isite<<std::endl;
+    // std::cout<<"echeck:"<<echeck[isite]<<std::endl;
+    if (isite >= 0 && echeck[isite] == 0) {
+        echeck[isite] = 1;
+        esites[nsites++] = isite;
+        coord[nn] -= 10;
     }
-	    
-	
-// Remove mask after second ligand has been removed
-	/*else if ( element[i] == OZn || element[i] == OHZn || element[i] == OH2Zn ||  element[i] == ZnOH || element[i] == ZnO || element[i] == Zn ){
-	  	for (int n = 0; n < numneigh[i]; n++) {
-      	  	int nn = neighbor[i][n];
-            isite = i2site[nn];
-            if (isite >= 0 && echeck[isite] == 0 ) {
-                    coord[isite]=coord[isite]+10;
-                    esites[nsites++] = isite;
-                    echeck[isite] = 1;
-            }
-            for (int k = 0; k < numneigh[nn]; k++){
-                int kk = neighbor[nn][k];
-                isite = i2site[kk];
-                if (isite >= 0 && echeck[isite] == 0) {
-                    coord[isite] = coord[isite]+10;
-                    esites[nsites++] = isite;
-                    echeck[isite] = 1;
-                }
-				for (int m = 0; m < numneigh[kk]; m++) {
-					int mm = neighbor[kk][m];
-					isite = i2site[mm];
-					if (isite >= 0 && echeck[isite] == 0) { // Cover third neighbour Zn site
-						coord[isite] = coord[isite]+10;
-						esites[nsites++] = isite;
-                        echeck[isite] = 1;
-                    }
-                    for (int s = 0; s < numneigh[mm]; s++) {
-                        int ss = neighbor[mm][s];
-                        isite = i2site[ss];
-                        if (isite >= 0 && echeck[isite] == 0) { // Cover fourth neighbour O site
-                            coord[isite] = coord[isite]+10;
-                            esites[nsites++] = isite;
-                            echeck[isite] = 1;
-                        }
-                    }
-                }
-            }
-        }
-	}*/
-// Remove mask after reverse densification
-    else if ( element[i] == VACANCY && ( element[j] == TaX4O)){
-        for (int n = 0; n < numneigh[i]; n++) {
-            int nn = neighbor[i][n];
-            isite = i2site[nn];
-            if (isite >= 0 && echeck[isite] == 0 ) {
-                coord[isite]=coord[isite]+10;
-                esites[nsites++] = isite;
-                echeck[isite] = 1;
-            }
-            for (int k = 0; k < numneigh[nn]; k++){
-                int kk = neighbor[nn][k];
-                isite = i2site[kk];
-                if (isite >= 0 && echeck[isite] == 0) {
-                    coord[isite] = coord[isite]+10;
-                    esites[nsites++] = isite;
-                    echeck[isite] = 1;
-                }
-/*				for (int m = 0; m < numneigh[kk]; m++) {
-					int mm = neighbor[kk][m];
-					isite = i2site[mm];
-					if (isite >= 0 && echeck[isite] == 0) { // Cover third neighbour Zn site
-                        coord[isite] = coord[isite]+10;
-                        esites[nsites++] = isite;
-                        echeck[isite] = 1;
-                    }
-                    for (int s = 0; s < numneigh[mm]; s++) {
-						int ss = neighbor[mm][s];
-						isite = i2site[ss];
-						if (isite >= 0 && echeck[isite] == 0) { // Cover fourth neighbour O site
-                            coord[isite] = coord[isite]+10;
-                            esites[nsites++] = isite;
-                            echeck[isite] = 1;
-                        }
-                    }
-                }
-*/            }
-        }
+    for (int m = 0; m < nsites; m++)  {echeck[esites[m]] = 0; esites[m]=0;}
+  }
+}
+
+void AppAldTa2o5::remove_mask(int i) {
+  int nsites = 0;
+  int isite = i2site[i];
+  echeck[isite] = 1;
+  esites[nsites++] = isite;
+  for (int s = 0; s < numneigh[i]; s++) {
+    int nn = neighbor[i][s];
+    int isite = i2site[nn];
+    if (isite >= 0 && echeck[isite] == 0) {
+        echeck[isite] = 1;
+        esites[nsites++] = isite;
+        coord[nn] += 10;
     }
-      
-	  	for (int m = 0; m < nsites; m++)  {echeck[esites[m]] = 0; esites[m]=0;}
+    for (int ss = 0; ss < numneigh[nn]; ss++){
+      int nnn = neighbor[nn][ss];
+      int isite = i2site[nnn];
+      if (isite >= 0 && echeck[isite] == 0) {
+        echeck[isite] = 1;
+        esites[nsites++] = isite;
+        coord[nnn] += 10;
+      }
+    }
+  }
+  // for (int s = 0; s < numneigh[i]; s++) {
+  //   int nn = neighbor[i][s];
+  //   coord[nn] += 10;
+  // }
+  for (int m = 0; m < nsites; m++)  {echeck[esites[m]] = 0; esites[m]=0;}
+  // std::cout << "remove mask " << i << std::endl;
+}
+
+void AppAldTa2o5::remove_mask_2(int i) {
+  int nsites = 0;
+  int isite = i2site[i];
+  echeck[isite] = 1;
+  esites[nsites++] = isite;
+  for (int s = 0; s < numneigh[i]; s++) {
+    int nn = neighbor[i][s];
+    int isite = i2site[nn];
+    if (isite >= 0 && echeck[isite] == 0) {
+        echeck[isite] = 1;
+        esites[nsites++] = isite;
+        coord[nn] += 10;
+    }
+  }
+  for (int m = 0; m < nsites; m++)  {echeck[esites[m]] = 0; esites[m]=0;}
 }

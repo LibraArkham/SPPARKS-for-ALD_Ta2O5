@@ -19,12 +19,12 @@
 ------------------------------------------------------------------------- */
 
 #ifdef APP_CLASS
-AppStyle(ald/ta2o5,AppAldTa2o5)
+AppStyle(ald/hfo2,AppAldHfO2)
 
 #else
 
-#ifndef SPK_APP_ALD_Ta2o5_H
-#define SPK_APP_ALD_Ta2o5_H
+#ifndef SPK_APP_ALD_HfO2
+#define SPK_APP_ALD_HfO2
 
 #include "app_lattice.h"
 
@@ -32,12 +32,12 @@ AppStyle(ald/ta2o5,AppAldTa2o5)
 
 namespace SPPARKS_NS {
 
-class AppAldTa2o5 : public AppLattice {
-  friend class DiagAldta2o5;
+class AppAldHfO2 : public AppLattice {
+  friend class DiagAldHfO2;
 
  public:
-  AppAldTa2o5(class SPPARKS *, int, char **);
-  ~AppAldTa2o5();
+  AppAldHfO2(class SPPARKS *, int, char **);
+  ~AppAldHfO2();
   void input_app(char *, int, char **);
   void grow_app();
   void init_app();
@@ -89,14 +89,12 @@ class AppAldTa2o5 : public AppLattice {
   int freeevent;           // index of 1st unused event in list
 
   void clear_events(int);
-  void add_event(int, int, int, double, int, int,int);
+  void add_event(int, int, int, double, int, int, int);
   void grow_reactions(int);
   void count_coord(int);
   void count_coordO(int);
   void remove_mask(int);
-  void remove_mask_2(int);
   void put_mask(int);
-  void put_mask_2(int);
   void update_coord(int,int,int,int,int);
 };
 

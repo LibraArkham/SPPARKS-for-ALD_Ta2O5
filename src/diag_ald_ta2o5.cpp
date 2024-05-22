@@ -10,13 +10,6 @@
 
    See the README file in the top-level SPPARKS directory.
 ------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------
-   ALD application of HfO2 was developed by:
-   mahdi shirazi: m.shirazi@tue.nl, TU/e department of applied physics,
-   Simon D. Elliott: simon.elliott@schrodinger.com, Schrodinger Materials Science.
-   This application is a part of SPPARKS and authors retian the above term.
-   See the manual-app-ald and examples folders for more information.
-------------------------------------------------------------------------- */
 
 #include "mpi.h"
 #include "stdlib.h"
@@ -34,8 +27,8 @@ using namespace SPPARKS_NS;
 
 enum{VACANCY,O,//2
 TaX5O,//3 TaX5 adsorption
-TaX4O,TaX4,TaX,Ta,//7 TaX5 surface species
-OTaX,OTa,//9 oxygen pulse 
+TaX4O,TaO,TaX,Ta,//8 TaX5 surface species
+OTa,OH,TaX5OH,TaX3O,O3Ta,//9 oxygen pulse 
 QCM,EVENTS,ONE,TWO,THREE};
 
 
@@ -94,14 +87,17 @@ void DiagAldta2o5::init()
       if (strcmp(list[i],"O") == 0) which[i] = O;
       else if (strcmp(list[i],"QCM") == 0) which[i] = QCM;
       else if (strcmp(list[i],"Ta") == 0) which[i] = Ta;
-      else if (strcmp(list[i],"TaX4") == 0) which[i] = TaX4;
       else if (strcmp(list[i],"OTa") == 0) which[i] = OTa;
       else if (strcmp(list[i],"TaX") == 0) which[i] = TaX;
-      else if (strcmp(list[i],"OTaX") == 0) which[i] = OTaX;
+      else if (strcmp(list[i],"TaO") == 0) which[i] = TaO;
       else if (strcmp(list[i],"TaX4O") == 0) which[i] = TaX4O;
       else if (strcmp(list[i],"TaX5O") == 0) which[i] = TaX5O;
       else if (strcmp(list[i],"VAC") == 0) which[i] = VACANCY;
       else if (strcmp(list[i],"events") == 0) which[i] = EVENTS;
+      else if (strcmp(list[i],"OH") == 0) which[i] = OH;
+      else if (strcmp(list[i],"TaX5OH") == 0) which[i] = TaX5OH;
+      else if (strcmp(list[i],"TaX3O") == 0) which[i] = TaX3O;
+      else if (strcmp(list[i],"O3Ta") == 0) which[i] = O3Ta;
 
 
     else if (list[i][0] == 's') {
@@ -138,7 +134,7 @@ void DiagAldta2o5::compute()
 // here as well we have to consider some modification, generally it does not seem so difficult
   if (siteflag) {
     sites[O] = 0; sites[Ta] = 0; sites[OTa] = 0;sites[VACANCY] = 0;
-    sites[TaX4] = 0; sites[TaX4O] = 0; sites[TaX] = 0; sites[OTaX] = 0; sites[TaX5O] = 0;  
+    sites[TaX4O] = 0; sites[TaX] = 0; sites[TaO] = 0; sites[TaX5O] = 0;  sites[OH] = 0; sites[TaX5OH] = 0; sites[TaX3O] = 0;
     int *element = appaldta2o5->element;
     int nlocal = appaldta2o5->nlocal;
     for (int i = 0; i < nlocal; i++) sites[element[i]]++;
@@ -150,16 +146,18 @@ void DiagAldta2o5::compute()
     else if (which[i] == VACANCY) ivalue = sites[VACANCY];
     else if (which[i] == OTa) ivalue = sites[OTa];
     else if (which[i] == TaX) ivalue = sites[TaX];
-    else if (which[i] == OTaX) ivalue = sites[OTaX];
-    else if (which[i] == TaX4) ivalue = sites[TaX4];
+    else if (which[i] == TaO) ivalue = sites[TaO];
     else if (which[i] == TaX4O) ivalue = sites[TaX4O];
     else if (which[i] == TaX5O) ivalue = sites[TaX5O];
-   
+    else if (which[i] == OH) ivalue = sites[OH];
+    else if (which[i] == TaX5OH) ivalue = sites[TaX5OH];
+    else if (which[i] == TaX3O) ivalue = sites[TaX3O];
+    else if (which[i] == O3Ta) ivalue = sites[O3Ta];
     else if (which[i] == EVENTS) ivalue = appaldta2o5->nevents;
     else if (which[i] == ONE) ivalue = appaldta2o5->scount[index[i]];
     else if (which[i] == TWO) ivalue = appaldta2o5->dcount[index[i]];
     else if (which[i] == THREE) ivalue = appaldta2o5->vcount[index[i]];
-    else if (which[i] == QCM) ivalue = 16*sites[O]+181*sites[Ta]+197*sites[OTa]+226*sites[TaX]+242*sites[OTaX]+361*sites[TaX4]+377*sites[TaX4O]+422*sites[TaX5O];
+    else if (which[i] == QCM) ivalue = 16*sites[O]+181*sites[Ta]+197*sites[OTa]+226*sites[TaX]+197*sites[TaO]+377*sites[TaX4O]+422*sites[TaX5O]+17*sites[OH]+423*sites[TaX5OH]+316*sites[TaX3O]+229*sites[O3Ta];
 
     MPI_Allreduce(&ivalue,&ivector[i],1,MPI_INT,MPI_SUM,world);
   }
